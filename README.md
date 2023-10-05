@@ -1,6 +1,6 @@
 
 # Overview
-**FARHAN-Shot** performs [Pixie Dust attack](https://forums.kali.org/showthread.php?24286-WPS-Pixie-Dust-Attack-Offline-WPS-Attack) without having to switch to monitor mode.
+**FARHAN-Shot2** performs [Pixie Dust attack](https://forums.kali.org/showthread.php?24286-WPS-Pixie-Dust-Attack-Offline-WPS-Attack) without having to switch to monitor mode.
 # Features
  - [Pixie Dust attack](https://forums.kali.org/showthread.php?24286-WPS-Pixie-Dust-Attack-Offline-WPS-Attack);
  - integrated [3WiFi offline WPS PIN generator](https://3wifi.stascorp.com/wpspin);
@@ -32,27 +32,27 @@
  make
  sudo make install
  ```
-**Getting FARHAN-Shot**
+**Getting FARHAN-Shot2**
  ```
  cd ~
- wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot/master/FARHAN-Shot.py
+ wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/FARHAN-Shot2.py
  ```
 Optional: getting a list of vulnerable to pixie dust devices for highlighting in scan results:
  ```
- wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot/master/vulnwsc.txt
+ wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/vulnwsc.txt
  ```
 ## Arch Linux
 **Installing requirements**
  ```
  sudo pacman -S wpa_supplicant pixiewps wget python
  ```
-**Getting FARHAN-Shot**
+**Getting FARHAN-Shot2**
  ```
- wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot/master/FARHAN-Shot.py
+ wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/FARHAN-Shot2.py
  ```
 Optional: getting a list of vulnerable to pixie dust devices for highlighting in scan results:
  ```
- wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot/master/vulnwsc.txt
+ wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/vulnwsc.txt
  ```
 ## Alpine Linux
 It can also be used to run on Android devices using [Linux Deploy](https://play.google.com/store/apps/details?id=ru.meefik.linuxdeploy)
@@ -65,20 +65,20 @@ Adding the testing repository:
  ```
  sudo apk add python3 wpa_supplicant pixiewps iw
  ```
- **Getting FARHAN-Shot**
+ **Getting FARHAN-Shot2**
  ```
- sudo wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot/master/FARHAN-Shot.py
+ sudo wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/FARHAN-Shot2.py
  ```
 Optional: getting a list of vulnerable to pixie dust devices for highlighting in scan results:
  ```
- sudo wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot/master/vulnwsc.txt
+ sudo wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/vulnwsc.txt
  ```
 ## [Termux](https://termux.com/)
 Please note that root access is required.  
 
 #### Using installer
  ```
- curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash
+ curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2_Termux_installer/master/installer.sh | bash
  ```
 #### Manually
 **Installing requirements**
@@ -86,18 +86,18 @@ Please note that root access is required.
  pkg install -y root-repo
  pkg install -y git tsu python wpa-supplicant pixiewps iw openssl
  ```
-**Getting FARHAN-Shot**
+**Getting FARHAN-Shot2**
  ```
- git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot
+ git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot2 FARHAN-Shot2
  ```
 #### Running
  ```
- sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 --iface-down -K
+ sudo python FARHAN-Shot2/FARHAN-Shot2.py -i wlan0 --iface-down -K
  ```
 
 # Usage
 ```
- FARHAN-Shot.py <arguments>
+ FARHAN-Shot2.py <arguments>
  Required arguments:
      -i, --interface=<wlan0>  : Name of the interface to use
 
@@ -125,28 +125,28 @@ Please note that root access is required.
 ## Usage examples
 Start Pixie Dust attack on a specified BSSID:
  ```
- sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -K
+ sudo python3 FARHAN-Shot2.py -i wlan0 -b 00:90:4C:C1:AC:21 -K
  ```
 Show avaliable networks and start Pixie Dust attack on a specified network:
  ```
- sudo python3 FARHAN-Shot.py -i wlan0 -K
+ sudo python3 FARHAN-Shot2.py -i wlan0 -K
  ```
 Launch online WPS bruteforce with the specified first half of the PIN:
  ```
- sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -B -p 1234
+ sudo python3 FARHAN-Shot2.py -i wlan0 -b 00:90:4C:C1:AC:21 -B -p 1234
  ```
  Start WPS push button connection:s
  ```
- sudo python3 FARHAN-Shot.py -i wlan0 --pbc
+ sudo python3 FARHAN-Shot2.py -i wlan0 --pbc
  ```
 ## Troubleshooting
 #### "RTNETLINK answers: Operation not possible due to RF-kill"
  Just run:
 ```sudo rfkill unblock wifi```
 #### "Device or resource busy (-16)"
- Try disabling Wi-Fi in the system settings and kill the Network manager. Alternatively, you can try running FARHAN-Shot with ```--iface-down``` argument.
+ Try disabling Wi-Fi in the system settings and kill the Network manager. Alternatively, you can try running FARHAN-Shot2 with ```--iface-down``` argument.
 #### The wlan0 interface disappears when Wi-Fi is disabled on Android devices with MediaTek SoC
- Try running FARHAN-Shot with the `--mtk-wifi` flag to initialize Wi-Fi device driver.
+ Try running FARHAN-Shot2 with the `--mtk-wifi` flag to initialize Wi-Fi device driver.
 # Acknowledgements
 ## Special Thanks
 * `rofl0r` for initial implementation;
