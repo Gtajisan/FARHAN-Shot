@@ -15,6 +15,35 @@
  - [Wpa supplicant](https://www.w1.fi/wpa_supplicant/);
  - [Pixiewps](https://github.com/wiire-a/pixiewps);
  - [iw](https://wireless.wiki.kernel.org/en/users/documentation/iw).
+
+Please note that root access is required.  
+
+### Installation one line:
+
+```bash
+apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2_Termux_installer/master/installer.sh | bash && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot2 FARHAN-Shot2 && sudo python FARHAN-Shot2/FARHAN-Shot2.py -i wlan0 --iface-down -K
+```
+
+#### Using installer
+ ```
+ curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2_Termux_installer/master/installer.sh | bash
+ ```
+#### Manually
+**Installing requirements**
+ ```
+ pkg install -y root-repo
+ pkg install -y git tsu python wpa-supplicant pixiewps iw openssl
+ ```
+**Getting FARHAN-Shot2**
+ ```
+ git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot2 FARHAN-Shot2
+ ```
+#### Running
+ ```
+ sudo python FARHAN-Shot2/FARHAN-Shot2.py -i wlan0 --iface-down -K
+ ```
+
+
 # Setup
 ## Debian/Ubuntu
 **Installing requirements**
@@ -78,32 +107,7 @@ Optional: getting a list of vulnerable to pixie dust devices for highlighting in
  sudo wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/vulnwsc.txt
  ```
 ## [Termux](https://termux.com/)
-Please note that root access is required.  
 
-### Installation one line:
-
-```bash
-apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2_Termux_installer/master/installer.sh | bash && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot2 FARHAN-Shot2 && sudo python FARHAN-Shot2/FARHAN-Shot2.py -i wlan0 --iface-down -K
-```
-
-#### Using installer
- ```
- curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2_Termux_installer/master/installer.sh | bash
- ```
-#### Manually
-**Installing requirements**
- ```
- pkg install -y root-repo
- pkg install -y git tsu python wpa-supplicant pixiewps iw openssl
- ```
-**Getting FARHAN-Shot2**
- ```
- git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot2 FARHAN-Shot2
- ```
-#### Running
- ```
- sudo python FARHAN-Shot2/FARHAN-Shot2.py -i wlan0 --iface-down -K
- ```
 
 # Usage
 ```
