@@ -3,10 +3,6 @@
 [![OS](https://img.shields.io/badge/Tested%20On-Linux%20%7C%20Android-yellowgreen.svg)](https://termux.com/)
 
 
-### Hack WIfi Using Termux! (Requires Root)
-<p align="center"><img src="https://h.top4top.io/p_2835ingub0.png"></p>
-
-
 
 # Overview
 **FARHAN-Shot2** performs [Pixie Dust attack](https://forums.kali.org/showthread.php?24286-WPS-Pixie-Dust-Attack-Offline-WPS-Attack) without having to switch to monitor mode.
@@ -28,6 +24,12 @@ Please note that root access is required.
 ```bash
 apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage && curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2_Termux_installer/master/installer.sh | bash && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot2 FARHAN-Shot2 && sudo python FARHAN-Shot2/FARHAN-Shot2.py -i wlan0 --iface-down -K
 ```
+
+
+### Hack WIfi Using Termux! (Requires Root)
+<p align="center"><img src="https://c.top4top.io/p_2834522a60.png"></
+
+
 
 #### Using installer
  ```
