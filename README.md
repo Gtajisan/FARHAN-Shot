@@ -4,7 +4,7 @@
 
 
 ### Hack WIfi Using Termux! (Requires Root)
-<p align="center"><img src="https://c.top4top.io/p_2834agjxx0.png"></p>
+<p align="center"><img src="https://e.top4top.io/p_2835atofj0.png"></p>
 
 # Overview
 **FARHAN-Shot2** performs [Pixie Dust attack](https://forums.kali.org/showthread.php?24286-WPS-Pixie-Dust-Attack-Offline-WPS-Attack) without having to switch to monitor mode.
