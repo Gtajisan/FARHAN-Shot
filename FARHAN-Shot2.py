@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-create by me farhan
+# create by me farhan
 import sys
 import subprocess
 import os
