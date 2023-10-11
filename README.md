@@ -3,10 +3,11 @@
 [![OS](https://img.shields.io/badge/Tested%20On-Linux%20%7C%20Android-yellowgreen.svg)](https://termux.com/)
 
 
-### FARHAN-SHOT2 /LINK
+### How to update WifiHack
+To check for updates and update, run the following command:
 ```
- https://github.com/Gtajisan/FARHAN-Shot2
- ```
+(cd WifiHack && git pull)
+```
 
 # FARHAN-Shot2_Termux_installer/LINK
 ```
