@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# create by me farhan
+# credit by farhan
 import sys
 import subprocess
 import os
@@ -15,7 +15,6 @@ from datetime import datetime
 import collections
 import statistics
 import csv
-from pathlib import Path
 from typing import Dict
 
 os.system('cls||clear')
