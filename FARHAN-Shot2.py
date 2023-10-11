@@ -40,6 +40,7 @@ print("""\033[1;32m
  \033[1;31mNote    :       ROOT DEVICES ONLY
 \033[1;36m▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 """)
+
 class NetworkAddress:
     def __init__(self, mac):
         if isinstance(mac, int):
