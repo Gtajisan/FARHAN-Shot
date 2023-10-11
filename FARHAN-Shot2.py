@@ -17,7 +17,7 @@ import statistics
 import csv
 from pathlib import Path
 from typing import Dict
- 
+os.system('cls||clear') 
 print("""\033[1;32m
 
 ███████╗██████╗░███╗░░██╗░░░░░░░██╗░░░░░░░██╗██╗███████╗██╗
