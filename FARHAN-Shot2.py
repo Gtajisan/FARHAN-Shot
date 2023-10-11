@@ -118,6 +118,8 @@ class WPSpin:
         self.algos = {'pin24': {'name': '24-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin24},
                       'pin28': {'name': '28-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin28},
                       'pin32': {'name': '32-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin32},
+                      'pin36-bit': {'name': '36-bit-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin36-bit},
+                      'pin44-bit': {'name': '44-bit-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin44-bit},
                       'pinDLink': {'name': 'D-Link PIN', 'mode': self.ALGO_MAC, 'gen': self.pinDLink},
                       'pinDLink1': {'name': 'D-Link PIN +1', 'mode': self.ALGO_MAC, 'gen': self.pinDLink1},
                       'pinASUS': {'name': 'ASUS PIN', 'mode': self.ALGO_MAC, 'gen': self.pinASUS},
@@ -131,6 +133,10 @@ class WPSpin:
                       'pinBrcm4': {'name': 'Broadcom 4', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 6232714},
                       'pinBrcm5': {'name': 'Broadcom 5', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 1086411},
                       'pinBrcm6': {'name': 'Broadcom 6', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3195719},
+                      'pinBrcm7': {'name': 'Broadcom 7', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 40414089},
+                      'pinBrcm8': {'name': 'Broadcom 8', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 77215369},
+                      'pinBrcm9': {'name': 'Broadcom 9', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 98988167},
+                      'pinBrcm10': {'name': 'Broadcom 10', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 21918889},
                       'pinAirc1': {'name': 'Airocon 1', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3043203},
                       'pinAirc2': {'name': 'Airocon 2', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 7141225},
                       'pinDSL2740R': {'name': 'DSL-2740R', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 6817554},
@@ -146,7 +152,6 @@ class WPSpin:
                       'pinHG532x': {'name': 'HG532x', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3425928},
                       'pinH108L': {'name': 'H108L', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9422988},
                       'pinONO': {'name': 'CBN ONO', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9575521}}
-
     @staticmethod
     def checksum(pin):
         """
