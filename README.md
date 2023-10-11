@@ -194,3 +194,4 @@ Launch online WPS bruteforce with the specified first half of the PIN:
 * `rofl0r` for initial implementation;
 * `Monohrom` for testing, help in catching bugs, some ideas;
 * `Wiire` for developing Pixiewps.
+* binod-xd` for inspire.
