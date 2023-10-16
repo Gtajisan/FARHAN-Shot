@@ -1,3 +1,5 @@
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&random=false&width=435&lines=im-farhan-thanks-for-my-cmd-use)](https://git.io/typing-svg)
+
 ### Hola, bienvenid@ **TERMUX** REPO CLEAN FILES.. 
 ..using  *wifi-hack* by Termux/Android, FARHAN-😫!!
 <br><br>
