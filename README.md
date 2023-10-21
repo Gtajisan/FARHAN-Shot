@@ -79,7 +79,7 @@ termux-setup-storage
  ```
 #### Running
  ```
- sudo python FARHAN-Shot2/FARHAN-Shot2.py -i wlan0 --iface-down -K
+ sudo python FARHAN-Shot2/FARHAN-Shot2.py -i wlan0 -K
  ```
 
 
