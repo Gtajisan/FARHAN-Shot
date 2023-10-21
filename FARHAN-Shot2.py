@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #Open Source Code.No Need More Modification.
-#Code by FARHAN
+#farhan-x-me
 import sys
 import subprocess
 import os
@@ -17,6 +17,7 @@ import collections
 import statistics
 import csv
 from typing import Dict
+
 os.system('cls||clear')
 print("""\033[1;32m
 
@@ -444,8 +445,8 @@ class Companion:
         self.connection_status = ConnectionStatus()
 
         user_home = str(pathlib.Path.home())
-        self.sessions_dir = f'{user_home}/.FARHAN/sessions/'
-        self.pixiewps_dir = f'{user_home}/.FARHAN/pixiewps/'
+        self.sessions_dir = f'{user_home}/.BiRi/sessions/'
+        self.pixiewps_dir = f'{user_home}/.BiRi/pixiewps/'
         self.reports_dir = os.path.dirname(os.path.realpath(__file__)) + '/reports/'
         if not os.path.exists(self.sessions_dir):
             os.makedirs(self.sessions_dir)
@@ -804,7 +805,7 @@ class Companion:
                 self.__second_half_bruteforce(bssid, f_half, s_half, delay)
             raise KeyboardInterrupt
         except KeyboardInterrupt:
-            print("\nAborting…\nStay With\nTeamError")
+            print("\nAborting…\nStay With\nFARHAN")
             filename = self.sessions_dir + '{}.run'.format(bssid.replace(':', '').upper())
             with open(filename, 'w') as file:
                 file.write(self.bruteforce.mask)
@@ -1013,11 +1014,11 @@ class WiFiScanner:
     def prompt_network(self) -> str:
         networks = self.iw_scanner()
         if not networks:
-            print('➢ No WPS Networks Found.')
+            print('[-] No WPS networks found.')
             return
         while 1:
             try:
-                networkNo = input('Select Target (Press Enter to Refresh)↩ ')
+                networkNo = input('Select target (press Enter to refresh): ')
                 if networkNo.lower() in ('r', '0', ''):
                     return self.prompt_network()
                 elif int(networkNo) in networks.keys():
@@ -1025,7 +1026,7 @@ class WiFiScanner:
                 else:
                     raise IndexError
             except Exception:
-                print('✘ Wrong Input ✘')
+                print('Invalid number')
 
 
 def ifaceUp(iface, down=False):
@@ -1048,7 +1049,7 @@ def die(msg):
 
 def usage():
     return """
-OneShotPin 0.0.2 (c) 2017 rofl0r, Code By FARHAN
+OneShotPin 0.0.2 (c) 2017 rofl0r, modded by FARHAN MUH TASIM
 
 %(prog)s <arguments>
 
@@ -1081,7 +1082,7 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser(
-        description='OneShotPin 0.0.2 (c) 2017 rofl0r, Code By FARHAN',
+        description='OneShotPin 0.0.2 (c) 2017 rofl0r, modded by FARHAN MUH TASIM',
         epilog='Example: %(prog)s -i wlan0 -b 00:90:4C:C1:AC:21 -K'
         )
 
@@ -1200,7 +1201,7 @@ if __name__ == '__main__':
                 else:
                     args.bssid = None
             else:
-                print("\033[1;91m\n𝙀𝙭𝙞𝙩 𝙁𝙧𝙤𝙢 𝙎𝙘𝙧𝙞𝙥𝙩....\n➢sᴛᴀʏ ᴡɪᴛʜ FARHAN X ME™\033[0m")
+                print("\nAborting…\nStay With\nFARHAN")
                 break
 
     if args.iface_down:
