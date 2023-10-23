@@ -17,12 +17,12 @@
 ### How to update WifiHack
 To check for updates and update, run the following command:
 ```
-(cd FARHAN-Shot2 && git pull)
+(cd FARHAN-Shot && git pull)
 ```
 
 # FARHAN-Shot2_Termux_installer/LINK
 ```
- https://github.com/Gtajisan/FARHAN-Shot2_Termux_installer
+ https://github.com/Gtajisan/FARHAN-Shot_Termux_installer
  ```
 
 
@@ -45,7 +45,7 @@ Please note that root access is required.
 ### Installation one line:
 
 ```bash
-apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage && curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2_Termux_installer/master/installer.sh | bash && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot2 FARHAN-Shot2 && sudo python FARHAN-Shot2/FARHAN-Shot2.py -i wlan0 --iface-down -K
+apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage && curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot2 && sudo python FARHAN-Shot2/FARHAN-Shot.py -i wlan0 --iface-down -K
 ```
 
 
@@ -59,7 +59,7 @@ Please note that root access is required.
 
 #### Using installer
  ```
- curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2_Termux_installer/master/installer.sh | bash
+ curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash
  ```
 #### Manually
 **Installing requirements**
@@ -75,82 +75,21 @@ termux-setup-storage
  ```
 **Getting FARHAN-Shot2**
  ```
- git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot2 FARHAN-Shot2
+ git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot
  ```
 #### Running
  ```
- sudo python FARHAN-Shot2/FARHAN-Shot2.py -i wlan0 -K
+ sudo python FARHAN-Shot2/FARHAN-Shot.py -i wlan0 -K
  ```
 
 
-# Setup
-## Debian/Ubuntu
-**Installing requirements**
- ```
- sudo apt install -y python3 wpasupplicant iw wget
- ```
-**Installing Pixiewps**
 
-***Ubuntu 18.04 and above or Debian 10 and above***
- ```
- sudo apt install -y pixiewps
- ```
- 
-***Other versions***
- ```
- sudo apt install -y build-essential unzip
- wget https://github.com/wiire-a/pixiewps/archive/master.zip && unzip master.zip
- cd pixiewps*/
- make
- sudo make install
- ```
-**Getting FARHAN-Shot2**
- ```
- cd ~
- wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/FARHAN-Shot2.py
- ```
-Optional: getting a list of vulnerable to pixie dust devices for highlighting in scan results:
- ```
- wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/vulnwsc.txt
- ```
-## Arch Linux
-**Installing requirements**
- ```
- sudo pacman -S wpa_supplicant pixiewps wget python
- ```
-**Getting FARHAN-Shot2**
- ```
- wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/FARHAN-Shot2.py
- ```
-Optional: getting a list of vulnerable to pixie dust devices for highlighting in scan results:
- ```
- wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/vulnwsc.txt
- ```
-## Alpine Linux
-It can also be used to run on Android devices using [Linux Deploy](https://play.google.com/store/apps/details?id=ru.meefik.linuxdeploy)
-
-**Installing requirements**  
-Adding the testing repository:
- ```
- sudo sh -c 'echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories'
- ```
- ```
- sudo apk add python3 wpa_supplicant pixiewps iw
- ```
- **Getting FARHAN-Shot2**
- ```
- sudo wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/FARHAN-Shot2.py
- ```
-Optional: getting a list of vulnerable to pixie dust devices for highlighting in scan results:
- ```
- sudo wget https://raw.githubusercontent.com/gtajisan/FARHAN-Shot2/master/vulnwsc.txt
- ```
 ## [Termux](https://termux.com/)
 
 
 # Usage
 ```
- FARHAN-Shot2.py <arguments>
+ FARHAN-Shot.py <arguments>
  Required arguments:
      -i, --interface=<wlan0>  : Name of the interface to use
 
@@ -178,19 +117,19 @@ Optional: getting a list of vulnerable to pixie dust devices for highlighting in
 ## Usage examples
 Start Pixie Dust attack on a specified BSSID:
  ```
- sudo python3 FARHAN-Shot2.py -i wlan0 -b 00:90:4C:C1:AC:21 -K
+ sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -K
  ```
 Show avaliable networks and start Pixie Dust attack on a specified network:
  ```
- sudo python3 FARHAN-Shot2.py -i wlan0 -K
+ sudo python3 FARHAN-Shot.py -i wlan0 -K
  ```
 Launch online WPS bruteforce with the specified first half of the PIN:
  ```
- sudo python3 FARHAN-Shot2.py -i wlan0 -b 00:90:4C:C1:AC:21 -B -p 1234
+ sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -B -p 1234
  ```
  Start WPS push button connection:s
  ```
- sudo python3 FARHAN-Shot2.py -i wlan0 --pbc
+ sudo python3 FARHAN-Shot.py -i wlan0 --pbc
  ```
 ## Troubleshooting
 #### "RTNETLINK answers: Operation not possible due to RF-kill"
