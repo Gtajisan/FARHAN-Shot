@@ -77,18 +77,20 @@ pkg install -y root-repo
 pkg install -y git tsu python wpa-supplicant pixiewps iw openssl
 termux-setup-storage
  ```
-**Getting FARHAN-Shot2**
+**run farhan hack py**
  ```
  git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot
  ```
+ ```
+ cd FARHAN-Shot
+ ```
+
 #### Running
  ```
  sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
  ```
 
 
-
-## [Termux](https://termux.com/)
 
 
 # Usage
@@ -121,19 +123,19 @@ termux-setup-storage
 ## Usage examples
 Start Pixie Dust attack on a specified BSSID:
  ```
- sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -K
+cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -K
  ```
 Show avaliable networks and start Pixie Dust attack on a specified network:
  ```
- sudo python3 FARHAN-Shot.py -i wlan0 -K
+cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 -K
  ```
 Launch online WPS bruteforce with the specified first half of the PIN:
  ```
- sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -B -p 1234
+cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -B -p 1234
  ```
  Start WPS push button connection:s
  ```
- sudo python3 FARHAN-Shot.py -i wlan0 --pbc
+cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 --pbc
  ```
 ## Troubleshooting
 #### "RTNETLINK answers: Operation not possible due to RF-kill"
