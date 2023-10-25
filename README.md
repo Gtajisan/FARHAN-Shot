@@ -119,6 +119,11 @@ termux-setup-storage
                                 (for internal Wi-Fi adapters implemented in MediaTek SoCs). Turn off Wi-Fi in the system settings before using this.
      -v, --verbose            : Verbose output
  ```
+#### Note: 
++ **First turn off your Wifi.**
++ **Turn on Hotspot.**
++ **Turn on Location.**
+
 
 ## Usage examples
 Start Pixie Dust attack on a specified BSSID:
