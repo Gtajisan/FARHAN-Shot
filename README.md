@@ -72,9 +72,6 @@ Please note that root access is required.
  ```
 pkg update
 pkg upgrade
-pkg install tsu
-pkg install python
-pkg install git
 pkg install -y root-repo
 pkg install -y git tsu python wpa-supplicant pixiewps iw openssl
 termux-setup-storage
