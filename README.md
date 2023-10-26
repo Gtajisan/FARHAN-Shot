@@ -123,6 +123,17 @@ termux-setup-storage
 + **Turn on Hotspot.**
 + **Turn on Location.**
 
+## SCREEN SHOTS [Termux]
+
+<br>
+<p align="center">
+<img width="50%" src="https://i.postimg.cc/fbzJnQL6/Screenshot-20231026-084714-Termux.png"/>
+<img width="46%" src="https://i.postimg.cc/sXPdWrLw/Screenshot-20231021-093514-Termux.png"/>
+</p>
+
+
+
+
 
 ## Usage examples
 Start Pixie Dust attack on a specified BSSID:
