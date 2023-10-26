@@ -992,13 +992,13 @@ class WiFiScanner:
 
     def prompt_network(self) -> str:
         os.system('clear')
-        print(''' ╔══════════════════════════════════════════╗
-     ║                  FARHAN-Shot                   ║
-     ║         SIMPLE WIFI HACKING TOOL         ║
-     ║         AUTHOR : FARHAN MUH TASIM         ║
-     ║         FACEBOOK : @gtajisan        ║
-     ║         TELEGRAM : @FARHAN MUH TASIM             ║
-     ╚══════════════════════════════════════════╝
+        print(''' ███████╗██████╗░███╗░░██╗░░░░░░░██╗░░░░░░░██╗██╗███████╗██╗
+██╔════╝██╔══██╗████╗░██║░░░░░░░██║░░██╗░░██║██║██╔════╝██║
+█████╗░░██████╔╝██╔██╗██║█████╗░╚██╗████╗██╔╝██║█████╗░░██║
+██╔══╝░░██╔══██╗██║╚████║╚════╝░░████╔═████║░██║██╔══╝░░██║
+██║░░░░░██║░░██║██║░╚███║░░░░░░░░╚██╔╝░╚██╔╝░██║██║░░░░░██║
+╚═╝░░░░░╚═╝░░╚═╝╚═╝░░╚══╝░░░░░░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝
+                                                  \n\t\t[\033[1;32m*\033[1;37m] Modified by : Farhan \n\t\t[\033[1;32m*\033[1;37m] Version     : FARHAN2.0 \n\t\t[\033[1;32m*\033[1;37m] Telegram    : @FARHAN MUH TASIM \n''')
         networks = self.iw_scanner()
         if not networks:
             ani('[\033[1;31m-\033[1;37m] No WPS networks found!')
