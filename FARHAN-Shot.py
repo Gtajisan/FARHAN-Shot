@@ -1191,18 +1191,12 @@ if __name__ == '__main__':
         except KeyboardInterrupt:
             if args.loop:
                 if input("\n[?] Exit the script (otherwise continue to AP scan)? [N/y] ").lower() == 'y':
-                    ani("\n[\033[1;31m!\033[1;37m] ╔════════════════════════════════════════════════╗
-║                THANKS FOR USING                ║
-║           DEVELOPED BY @ILLUSIONGHOST          ║
-╚════════════════════════════════════════════════╝…")
+                    ani("\n[\033[1;31m!\033[1;37m] Aborting…")
                     break
                 else:
                     args.bssid = None
             else:
-                ani("\n[\033[1;31m!\033[1;37m]╔════════════════════════════════════════════════╗
-║                THANKS FOR USING                ║
-║           DEVELOPED BY @ILLUSIONGHOST          ║
-╚════════════════════════════════════════════════╝…")
+                ani("\n[\033[1;31m!\033[1;37m]Aborting…")
                 break
 
     if args.iface_down:
