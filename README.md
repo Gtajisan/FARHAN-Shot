@@ -17,20 +17,6 @@
 [![python](https://img.shields.io/badge/python-2.7-brightgreen.svg)](https://www.python.org/downloads/release/python-2714/)
 [![OS](https://img.shields.io/badge/Tested%20On-Linux%20%7C%20Android-yellowgreen.svg)](https://termux.com/)
 
-
-### How to update WifiHack
-To check for updates and update, run the following command:
-```
-(cd FARHAN-Shot && git pull)
-```
-
-# FARHAN-Shot2_Termux_installer/LINK
-```
- https://github.com/Gtajisan/FARHAN-Shot_Termux_installer
- ```
-
-
-
 # Overview
 **FARHAN-Shot2** performs [Pixie Dust attack](https://forums.kali.org/showthread.php?24286-WPS-Pixie-Dust-Attack-Offline-WPS-Attack) without having to switch to monitor mode.
 # Features
@@ -44,6 +30,7 @@ To check for updates and update, run the following command:
  - [Pixiewps](https://github.com/wiire-a/pixiewps);
  - [iw](https://wireless.wiki.kernel.org/en/users/documentation/iw).
 
+
 Please note that root access is required.  
 
 ### Installation one line:
@@ -53,15 +40,16 @@ apt update && apt upgrade && pkg install tsu && pkg install python && pkg instal
 ```
 
 
-## [Termux](https://termux.com/)
-Please note that root access is required.  
+### How to update WifiHack
+To check for updates and update, run the following command:
+```
+(cd FARHAN-Shot && git pull)
+```
 
-
-### Hack WIfi Using Termux! (Requires Root)
-<p align="center"><img src="https://i.postimg.cc/fbzJnQL6/Screenshot-20231026-084714-Termux.png"></
-
-
-
+# FARHAN-Shot2_Termux_installer/LINK
+```
+ https://github.com/Gtajisan/FARHAN-Shot_Termux_installer
+ ```
 
 #### Using installer
  ```
@@ -89,7 +77,12 @@ termux-setup-storage
  sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
  ```
 
+## [Termux](https://termux.com/)
+Please note that root access is required.  
 
+
+### Hack WIfi Using Termux! (Requires Root)
+<p align="center"><img src="https://i.postimg.cc/fbzJnQL6/Screenshot-20231026-084714-Termux.png"></
 
 
 # Usage
@@ -130,7 +123,6 @@ termux-setup-storage
 <img width="50%" src="https://i.postimg.cc/fbzJnQL6/Screenshot-20231026-084714-Termux.png"/>
 <img width="46%" src="https://i.postimg.cc/sXPdWrLw/Screenshot-20231021-093514-Termux.png"/>
 </p>
-
 
 
 
