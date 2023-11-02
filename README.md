@@ -87,7 +87,7 @@ Please note that root access is required.
 <br>
 <p align="center">
 <img width="50%" src="https://i.postimg.cc/fbzJnQL6/Screenshot-20231026-084714-Termux.png"/>
-<img width="46%" src="https://i.postimg.cc/sXPdWrLw/Screenshot-20231021-093514-Termux.png"/>
+<img width="46%" src="https://i.postimg.cc/MKhWpDTR/Screenshot-20231029-202035-Termux.png"/>
 </p>
 
 # Usage
