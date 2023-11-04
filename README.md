@@ -36,7 +36,7 @@ Please note that root access is required.
 ### Installation one line:
 
 ```bash
-apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage && curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 --iface-down -K
+apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage && curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
 ```
 
 
