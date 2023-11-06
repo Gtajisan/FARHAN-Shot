@@ -53,7 +53,7 @@ To check for updates and update, run the following command:
 
 #### Using installer
  ```
- curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash
+ curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
  ```
 #### Manually
 **Installing requirements**
