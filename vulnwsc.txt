@@ -1,10 +1,13 @@
+3G Router WBR-0001
 ADSL RT2860
+ADSL Router EV-2006-07-27
 AIR3G WSC Wireless Access Point AIR3G WSC Device
 AirLive Wireless Gigabit AP AirLive Wireless Gigabit AP
 Archer_A9 1.0
 Archer A2 5.0
 Archer A5 4.0
 Archer C2 1.0
+ArcherC2 3.0
 Archer C2 3.0
 Archer C5 4.0
 Archer C6U 1.0.0
@@ -19,12 +22,14 @@ Archer C50 6.0
 Archer MR200 1.0
 Archer MR200 4.0
 Archer MR200 5.0
+Archer VR2100 1.0
 Archer VR300 1.20
 Archer VR400 3.0
 B-LINK 123456
 Belkin AP EV-2012-09-01
 DAP-1360 DAP-1360
 DIR-819 v1.0.1
+DIR-635 B3
 DIR-842 DIR-842
 DWR-921C3 WBR-0001
 D-Link N Router GO-RT-N150
@@ -33,6 +38,9 @@ D-Link Router DIR-615H1
 D-Link Router DIR-655
 D-Link Router DIR-809
 EC120-F5 1.0
+Edimax Edimax
+Enhanced Wireless Router F6D4230-4 v1
+EnGenius wireless AP Router EnGenius
 EV-2009-02-06
 Enhanced Wireless Router F6D4230-4 v1
 Home Internet Center KEENETIC series
@@ -42,14 +50,17 @@ JWNR2000v2(Wireless AP) JWNR2000v2
 Keenetic Keenetic series
 Linksys Wireless Access Point EA7500
 Linksys Wireless Router WRT110
+LTE3301 WBR-0001
 NBG-419N NBG-419N
 Netgear AP EV-2012-08-04
+NETGEAR Wireless Access Point NETGEAR
 NETGEAR Wireless Access Point R6220
 NETGEAR Wireless Access Point R6260
 N/A EV-2010-09-20
 Ralink Wireless Access Point RT2860
 Ralink Wireless Access Point WR-AC1210
 RTL8196E
+RTL8186 EV-2006-07-27
 RTL8xxx EV-2009-02-06
 RTL8xxx EV-2010-09-20
 RTL8xxx RTK_ECOS
@@ -65,6 +76,7 @@ TD-W9960 1.0
 TD-W9960 1.20
 TD-W9960v 1.0
 TD-W8968 2.0
+TL-MR100 1.0
 TL-MR3020 3.0
 TL-MR3420 5.0
 TL-MR6400 3.0
@@ -85,6 +97,7 @@ TL-WR850N 3.0
 TL-WR1042N EV-2010-09-20
 Trendnet router TEW-625br
 Trendnet router TEW-651br
+VN020-F3 1.0
 VMG3312-T20A RT2860
 VMG8623-T50A RT2860
 WAP300N WAP300N
@@ -95,7 +108,9 @@ Wi-Fi Protected Setup Router RT-N12
 Wi-Fi Protected Setup Router RT-N12D1
 Wi-Fi Protected Setup Router RT-N12VP
 Wireless Access Point .
+Wireless Router Wireless Router
 Wireless Router 123456
+Wireless Router EV-2009-02-06
 Wireless Router RTL8xxx EV-2009-02-06
 Wireless WPS Router <#ZVMODELVZ#>
 Wireless WPS Router RT-N10E
@@ -135,7 +150,10 @@ WPS Router RT-N56U
 WPS Router RT-N56UB1
 WPS Router RT-N65U
 WPS Router RT-N300
+WAP3205 WAP3205
+WN-200R WN-200R
 ZyXEL NBG-416N AP Router
+ZyXEL NBG-416N AP Router NBG-416N
 ZyXEL NBG-418N AP Router
 ZyXEL NBG-418N AP Router NBG-418N
 ZyXEL Wireless AP Router NBG-417N
