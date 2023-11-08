@@ -9,6 +9,7 @@
 <br><br>
 ![termuxICO](https://user-images.githubusercontent.com/80227002/112893051-6feceb00-90da-11eb-856d-1fac8f6d169a.png)
 <br><br>
+<a href="https://youtu.be/5janYQg1-Yw?si=jua2TI2c_k9slAkC" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="zerox-farhan" height="30" width="40" /></a>
 
 ### wifi-hack
 <p align="center"><img src="https://user-images.githubusercontent.com/75953873/115979290-66309900-a55b-11eb-8259-4b125efc42bb.png"></p>
