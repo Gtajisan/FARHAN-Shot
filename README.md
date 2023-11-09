@@ -48,10 +48,10 @@ To check for updates and update, run the following command:
 (cd FARHAN-Shot && git pull)
 ```
 
-# FARHAN-Shot2_Termux_installer/LINK
-```
- https://github.com/Gtajisan/FARHAN-Shot_Termux_installer
- ```
+# FARHAN-Shot2_Termux_installer/Link ✔
+**setup**
+https://github.com/Gtajisan/FARHAN-Shot_Termux_installer
+ 
 
 #### Using installer
  ```
