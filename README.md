@@ -12,7 +12,8 @@
 **Watch YouTube THES Video- Watch Facebook These Video**
 <a href="https://youtu.be/5janYQg1-Yw?si=jua2TI2c_k9slAkC" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="zerox-farhan" height="30" width="40" /></a>
 <a href="https://m.facebook.com/story.php?story_fbid=pfbid0EHHt7trGAv99XWDk1onVJ8XPTRZzv7KNfschNu7K9yjvo3Vh3jTLcxMPDkGm9D15l&id=100094924471568&mibextid=ZbWKwL" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="farhan muh tasim" height="30" width="40" /></a>
-<a href="https://f-droid.org/repo/com.termux_117.apk" target="blank"><img align="center" src="![image](https://github.com/Gtajisan/FARHAN-Shot/assets/124022055/3c37b916-f3de-4581-a99f-6cee7502545e) "
+<a href="https://f-droid.org/repo/com.termux_117.apk" target="blank"><img align="center" src="![image](![image](https://github.com/Gtajisan/FARHAN-Shot/assets/124022055/2eedab88-3e7e-412a-836d-c959986ca053)
+ ) "
  alt="termux" height="30" width="40" /></a>
 
 ### wifi-hack
