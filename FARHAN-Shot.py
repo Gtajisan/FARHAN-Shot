@@ -963,7 +963,7 @@ class WiFiScanner:
         print('Networks list:')
         print('{:<4} {:<18} {:<25} {:<8} {:<4} {:<27} {:<}'.format(
             '#', 'BSSID', 'ESSID', 'Sec.', 'PWR', 'WSC device name', 'WSC model'))
-        print ('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+        print ('\n\033[1;32m════════════════════════════════════════════════════════\033[1;37m')
          
 
         network_list_items = list(network_list.items())
@@ -998,7 +998,7 @@ class WiFiScanner:
 █████╗░░███████║██╔██╗██║
 ██╔══╝░░██╔══██║██║╚████║
 ██║░░░░░██║░░██║██║░╚███║
-╚═╝░░░░░╚═╝░░╚═╝╚═╝░░╚══╝ \033[1;36mFARHAN-MUH-TASIM
+╚═╝░░░░░╚═╝░░╚═╝╚═╝░░╚══╝ ( ' \033[1;36mFARHAN-MUH-TASIM ' )
                                                     \n\t\t[\033[1;32m*\033[1;37m] NAME        : FARHAN MUH TASIM\n\t\t[\033[1;32m*\033[1;37m] WORK ONLY   : GREEN-COLOR WIFI\n\t\t[\033[1;32m*\033[1;37m] Create  by  : Farhan \n\t\t[\033[1;32m*\033[1;37m] Version     : FARHAN2.0 \n\t\t[\033[1;32m*\033[1;37m] FACEBOOK    : @FARHAN MUH TASIM \n''')
         networks = self.iw_scanner()
         if not networks:
@@ -1013,7 +1013,7 @@ class WiFiScanner:
             return self.prompt_network()
         while 1:
             try:
-                print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+                print('\n\033[1;32m════════════════════════════════════════════════════════\033[1;37m')
                 networkNo = input('[\033[1;33m?\033[1;37m] Select target (press Enter to refresh): ')
                 if networkNo.lower() in ('r', '0', ''):
                     return self.prompt_network()
