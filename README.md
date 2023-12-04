@@ -161,4 +161,6 @@ cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 --pbc
 * `rofl0r` for initial implementation;
 * `Monohrom` for testing, help in catching bugs, some ideas;
 * `Wiire` for developing Pixiewps.
-* binod-xd` for inspire.
+* `binod-xd` for inspire.
+* `FARHAN-MUH-TASIM` create and modified 📍.
+* ` Mohammed alamin` modified and create source by oneshot.
