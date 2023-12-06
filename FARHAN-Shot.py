@@ -993,13 +993,14 @@ class WiFiScanner:
     def prompt_network(self) -> str:
         os.system('clear')
         print('''
+SIMPLE WIFI HACKING TOOL
 ███████╗██╗░░██╗███╗░░██╗
 ██╔════╝██║░░██║████╗░██║
 █████╗░░███████║██╔██╗██║
 ██╔══╝░░██╔══██║██║╚████║
 ██║░░░░░██║░░██║██║░╚███║
 ╚═╝░░░░░╚═╝░░╚═╝╚═╝░░╚══╝\033[1;36mFARHAN-MUH-TASIM 
-                                                    \n\t\t[\033[1;32m*\033[1;37m] NAME        : FARHAN MUH TASIM\n\t\t[\033[1;32m*\033[1;37m] WORK ONLY   : GREEN-COLOR WIFI\n\t\t[\033[1;32m*\033[1;37m] Create  by  : Farhan \n\t\t[\033[1;32m*\033[1;37m] Version     : FARHAN2.0 \n\t\t[\033[1;32m*\033[1;37m] FACEBOOK    : @FARHAN MUH TASIM \n''')
+                                                    \n\t\t[\033[1;32m*\033[1;37m] NAME        : FARHAN MUH TASIM\n\t\t[\033[1;32m*\033[1;37m] WORK ONLY   : GREEN-COLOR WIFI\n\t\t[\033[1;32m*\033[1;37m] AUTHOR  : Farhan \n\t\t[\033[1;32m*\033[1;37m] Version     : FARHAN2.0 \n\t\t[\033[1;32m*\033[1;37m] FACEBOOK    : @FARHAN MUH TASIM \n''')
         networks = self.iw_scanner()
         if not networks:
             ani('[\033[1;31m-\033[1;37m] No WPS networks found!')
