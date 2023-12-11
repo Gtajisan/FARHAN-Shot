@@ -44,6 +44,11 @@ Please note that root access is required.
 ```bash
 apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage && curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
 ```
+### tool unstall cmd
+```
+rm -rf FARHAN-Shot
+```
+
 
 
 ### How to update WifiHack
