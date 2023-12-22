@@ -58,8 +58,8 @@ To check for updates and update, run the following command:
 ```
 
 # FARHAN-Shot2_Termux_installer/Link ✔
-**setup**
-https://github.com/Gtajisan/FARHAN-Shot_Termux_installer
+
+* https://github.com/Gtajisan/FARHAN-Shot_Termux_installer
  
 
 #### Using installer
