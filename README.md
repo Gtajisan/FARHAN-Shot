@@ -69,11 +69,7 @@ https://github.com/Gtajisan/FARHAN-Shot_Termux_installer
 #### Manually
 **Installing requirements**
  ```
-pkg update &&
-pkg upgrade &&
-pkg install -y root-repo &&
-pkg install -y git tsu python wpa-supplicant pixiewps iw openssl &&
-termux-setup-storage
+pkg update && pkg upgrade && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage
  ```
 **run farhan hack py**
  ```
