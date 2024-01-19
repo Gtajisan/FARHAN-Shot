@@ -78,8 +78,7 @@ pkg update && pkg upgrade && pkg install -y root-repo && pkg install -y git tsu 
 
 #### Running
  ```
- cd FARHAN-Shot && 
- sudo python FARHAN-Shotx.py -i wlan0 -K
+ cd FARHAN-Shot && sudo python FARHAN-Shotx.py -i wlan0 -K
  ```
  #### one line 
  ```
