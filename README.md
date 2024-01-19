@@ -74,8 +74,6 @@ pkg update && pkg upgrade && pkg install -y root-repo && pkg install -y git tsu 
 **run farhan hack py**
  ```
  git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot
-
-
  ```
 
 #### Running
