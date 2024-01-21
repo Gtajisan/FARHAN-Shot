@@ -154,7 +154,7 @@ cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 --pbc
  Try disabling Wi-Fi in the system settings and kill the Network manager. Alternatively, you can try running FARHAN-Shot2 with ```--iface-down``` argument.
 #### The wlan0 interface disappears when Wi-Fi is disabled on Android devices with MediaTek SoC
  Try running FARHAN-Shot2 with the `--mtk-wifi` flag to initialize Wi-Fi device driver.
-# Acknowledgements
+
 ## CONNECT WITH US :
 
 [![Messenger](https://img.shields.io/badge/Messenger-Chat-blue?style=for-the-badge&logo=messenger)](https://m.me/j/AbZoOyGXJvl_zUrC/)
