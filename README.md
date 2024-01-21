@@ -76,13 +76,13 @@ pkg update && pkg upgrade && pkg install -y root-repo && pkg install -y git tsu 
  git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot
  ```
 
-#### Running
+#### Running fast command 😪?
  ```
- cd FARHAN-Shot && sudo python FARHAN-Shotx.py -i wlan0 -K
+sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K 
  ```
- #### one line 
+ #### 2Nd command 😁?
  ```
- sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
+ sudo python FARHAN-Shot/FARHAN-Shotx.py -i wlan0 -K 
  ```
 
 ## [Termux](https://termux.com/)
