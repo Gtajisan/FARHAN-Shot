@@ -137,7 +137,7 @@ sudo python FARHAN-Shot/File/3FRN.py -i wlan0 -K
 sudo python FARHAN-Shot/File/FRN.PY -i wlan0 -K
 ```
 ```
-sudo python FARHAN-Shot/File/bind cd.py -i wlan0 -K
+sudo python FARHAN-Shot/File/bindcd.py -i wlan0 -K
 ```
 
 + enjoy 🌕👀
