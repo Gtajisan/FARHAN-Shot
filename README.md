@@ -128,6 +128,15 @@ Please note that root access is required.
 + **First turn off your Wifi.**
 + **Turn on Hotspot.**
 + **Turn on Location.**
+### new version 🐸
+```
+sudo python FARHAN-Shot/File/3FRN.py -i wlan0 -K
+```
+```
+sudo python FARHAN-Shot/File/FRN.PY -i wlan0 -K
+```
++ enjoy 🌕👀
+
 
 ## Usage examples
 Start Pixie Dust attack on a specified BSSID:
