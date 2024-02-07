@@ -139,6 +139,9 @@ sudo python FARHAN-Shot/File/FRN.PY -i wlan0 -K
 ```
 sudo python FARHAN-Shot/File/bindcd.py -i wlan0 -K
 ```
+```
+sudo python FARHAN-Shot/File/oneshot.py -i wlan0 -K
+```
 
 + enjoy 🌕👀
 
