@@ -40,32 +40,23 @@ alt="termux🌚" height="30" width="40" /></a>
 Please note that root access is required.  
 
 ### Installation one line:
+** and `instller` command 
 
 ```bash
-apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage && curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
+curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
 ```
-### tool unstall cmd
-```
-rm -rf FARHAN-Shot
-```
-
-
 
 ### How to update WifiHack
-To check for updates and update, run the following command:
+To check for updates and update, `run` the following command:
 ```
 (cd FARHAN-Shot && git pull)
 ```
 
 # FARHAN-Shot2_Termux_installer/Link ✔
+**if don't understand click here**
 
-* https://github.com/Gtajisan/FARHAN-Shot_Termux_installer
+[installer](https://github.com/Gtajisan/FARHAN-Shot_Termux_installer)
  
-
-#### Using installer
- ```
- curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
- ```
 #### Manually
 **Installing requirements**
  ```
@@ -80,6 +71,12 @@ pkg update && pkg upgrade && pkg install -y root-repo && pkg install -y git tsu 
  ```
 sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K 
  ```
+
+### tool unstall cmd
+```
+rm -rf FARHAN-Shot
+```
+
  #### copy to past bro 
  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=1000&color=FF0202&background=000000&multiline=true&random=false&width=435&lines=2Nd+command+%F0%9F%98%81%3F" alt="Typing SVG" /></a>
  ```
