@@ -41,6 +41,7 @@ Please note that root access is required.
 ### Installation one line
 ```
 apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
+```
 ### Installed :
 ** and `instller` command 
 
