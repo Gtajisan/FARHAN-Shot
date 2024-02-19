@@ -46,6 +46,7 @@ apt update && apt upgrade && pkg install tsu && pkg install python && pkg instal
 ** and `instller` command 
 
 ```bash
+
 curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
 ```
 
@@ -62,13 +63,13 @@ To check for updates and update, `run` the following command:
  
 #### Manually
 **Installing requirements**
- ```console
+```console
 pkg update && pkg upgrade && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage
- ```console
+ ```
 **run farhan hack py**
  ```console
 git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot
- ```console
+ ```
 
 #### Running fast command 😪?
  ```console
