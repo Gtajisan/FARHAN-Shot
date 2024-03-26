@@ -40,13 +40,13 @@ alt="termux🌚" height="30" width="40" /></a>
 Please note that root access is required.  
 ### Installation one line
 ```console
-pkg update && pkg upgrade && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage && termux-setup-storage && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
+pkg update && pkg upgrade && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage && termux-setup-storage && git clone https://github.com/Gtajisan/FARHAN-Shot FARHAN-Shot && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
 ```
 ### Installed :
 ** and `instller` command 
 
 ```console
-curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
+curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash &&  sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
 ```
 
 ### How to update WifiHack
