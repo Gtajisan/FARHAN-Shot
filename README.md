@@ -201,4 +201,4 @@ cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 --pbc
 * `Wiire` for developing Pixiewps.
 * `Mohammad Al Amin` source and tool dev.
 * `FARHAN-MUH-TASIM` create and modified 📍.
-* ` Mohammed alamin` modified and create source by oneshot.
+
