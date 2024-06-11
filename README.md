@@ -195,9 +195,10 @@ cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 --pbc
 <a href="#"><img title="FARHAN-MUH-TASIM" src="https://img.shields.io/badge/FARHAN MUH TASIM-black?style=for-the-badge&logo=FARHAN MUH TASIM"></a>
 ## Thanks For Using This Tool <span style='font-size:45px;'>&#128536;</span> <span style='font-size:45px;'>&#128525;</span>
 ### thanks for these topics and supported 💖🤧
+* `DRYGDRYG` real developer 
 * `rofl0r` for initial implementation;
 * `Monohrom` for testing, help in catching bugs, some ideas;
 * `Wiire` for developing Pixiewps.
-* `binod-xd` for inspire.
+* `Mohammad Al Amin` source and tool dev.
 * `FARHAN-MUH-TASIM` create and modified 📍.
 * ` Mohammed alamin` modified and create source by oneshot.
