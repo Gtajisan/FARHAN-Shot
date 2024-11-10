@@ -42,12 +42,6 @@ Please note that root access is required.
 ```console
 apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot && termux-setup-storage && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
 ```
-### Installed :
-** and `instller` command 
-
-```console
-#curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash &&  sudo #python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
-```
 
 ### How to update WifiHack
 To check for updates and update, `run` the following command:
