@@ -46,7 +46,7 @@ apt update && apt upgrade && pkg install tsu && pkg install python && pkg instal
 ** and `instller` command 
 
 ```console
-curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash &&  sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
+#curl -sSf https://raw.githubusercontent.com/gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash &&  sudo #python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
 ```
 
 ### How to update WifiHack
