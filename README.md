@@ -61,7 +61,7 @@ pkg update && pkg upgrade && pkg install -y root-repo && pkg install -y git tsu 
  ```
 **run farhan hack py**
  ```console
-git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot
+git clone --depth 1 https://github.com/Gtajisan/FARHAN-Shot.git
  ```
 #### here 
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=FF2020&background=000000&random=false&width=435&lines=Fast+command+to+run+these+tool+" alt="Typing SVG" /></a>
