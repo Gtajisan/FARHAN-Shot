@@ -7,7 +7,7 @@
 ### Hola, bienvenid@ **TERMUX** REPO CLEAN FILES.. 
 ..using  *wifi-hack* by Termux/Android, FARHAN-😫!!
 <br><br>
-![termuxICO](https://user-images.githubusercontent.com/80227002/112893051-6feceb00-90da-11eb-856d-1fac8f6d169a.png)![devoleper](https://i.postimg.cc/brCnkTtR/IMG-20240611-183241-993.jpg)
+![termuxICO](https://user-images.githubusercontent.com/80227002/112893051-6feceb00-90da-11eb-856d-1fac8f6d169a.png)!##---
 <br><br>
 **Watch YouTube THES Video- Watch Facebook These Video**
 <a href="https://youtu.be/5janYQg1-Yw?si=jua2TI2c_k9slAkC" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="zerox-farhan" height="30" width="40" /></a>
