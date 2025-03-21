@@ -40,7 +40,7 @@ alt="termux🌚" height="30" width="40" /></a>
 Please note that root access is required.  
 ### Installation one line
 ```console
-apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot && termux-setup-storage && sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K
+apt update && apt upgrade && pkg install tsu && pkg install python && pkg install git && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && git clone --depth 1 https://github.com/gtajisan/FARHAN-Shot FARHAN-Shot && termux-setup-storage &&  sudo python FARHAN-Shot/FARHAN-Shotx.py -i wlan0 -K 
 ```
 
 ### How to update WifiHack
@@ -57,7 +57,10 @@ To check for updates and update, `run` the following command:
 #### Manually
 **Installing requirements**
 ```console
-pkg update && pkg upgrade && pkg install -y root-repo && pkg install -y git tsu python wpa-supplicant pixiewps iw openssl && termux-setup-storage
+pkg update && pkg upgrade -y
+pkg install root-repo -y
+pkg install git tsu python wpa-supplicant pixiewps iw openssl -y
+termux-setup-storage
  ```
 **run farhan hack py**
  ```console
