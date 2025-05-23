@@ -144,7 +144,8 @@ sudo python FARHAN-Shot/File/oneshot.py -i wlan0 -K
 ```
 
 + enjoy 🌕👀
-
+## pushed new runner 
+sudo python3 FARHAN-Shot-Modern.py -i wlan0 -K
 
 ## Usage examples
 Start Pixie Dust attack on a specified BSSID:
