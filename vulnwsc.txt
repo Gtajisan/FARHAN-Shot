@@ -1,4 +1,5 @@
 ADSL Router EV-2006-07-27
+Tenda RTL8xxx EV-2009-02-06
 ADSL RT2860
 AIR3G WSC Wireless Access Point AIR3G WSC Device
 AirLive Wireless Gigabit AP AirLive Wireless Gigabit AP
