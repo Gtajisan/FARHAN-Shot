@@ -40,7 +40,7 @@ alt="termux🌚" height="30" width="40" /></a>
 Please note that root access is required.  
 ### Installation one line
 ```console
-curl -sSf https://raw.githubusercontent.com/frnwot/FARHAN-Shot_Termux_installer/master/installer.sh | bash && curl -sL https://raw.githubusercontent.com/frnwot/Termux/main/fix_sudo.sh | bash && rm -rf FARHAN-Shot && git clone --depth 1 https://github.com/frnwot/FARHAN-Shot.git
+curl -sSf https://raw.githubusercontent.com/Gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && curl -sL https://raw.githubusercontent.com/frnwot/Termux/main/fix_sudo.sh | bash && sudo rm -rf FARHAN-Shot && git clone --depth 1 https://github.com/Gtajisan/FARHAN-Shot.git
 
 ```
 
@@ -65,7 +65,7 @@ termux-setup-storage
  ```
 **run farhan hack py**
  ```console
-git clone --depth 1 https://github.com/frnwot/FARHAN-Shot.git
+git clone --depth 1 https://github.com/Gtajisan/FARHAN-Shot.git
  ```
 #### here 
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=FF2020&background=000000&random=false&width=435&lines=Fast+command+to+run+these+tool+" alt="Typing SVG" /></a>
@@ -73,17 +73,17 @@ git clone --depth 1 https://github.com/frnwot/FARHAN-Shot.git
 
 **Running fast command 😪?** If these not work then use FARHAN-Shotx.py
  ```console
-sudo python FARHAN-Shot/FARHAN-Shot.py -i wlan0 -K 
+sudo python FARHAN-Shot/File/FARHAN-Shot.py -i wlan0 -K 
  ```
 **if these not work then use**
 ```console
-cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 -K
+cd FARHAN-Shot/File && sudo python3 FARHAN-Shot.py -i wlan0 -K
 ```
 
  #### copy to past bro 
  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=1000&color=FF0202&background=000000&multiline=true&random=false&width=435&lines=2Nd+command+%F0%9F%98%81%3F" alt="Typing SVG" /></a>
  ```console
- sudo python FARHAN-Shot/FARHAN-Shotx.py -i wlan0 -K 
+ sudo python FARHAN-Shot/File/FARHAN-Shotx.py -i wlan0 -K 
  ```
 
 ### tool unstall cmd
@@ -156,19 +156,19 @@ sudo python3 FARHAN-Shot-Modern.py -i wlan0 -K
 ## Usage examples
 Start Pixie Dust attack on a specified BSSID:
  ```
-cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -K
+cd FARHAN-Shot/File && sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -K
  ```
 Show avaliable networks and start Pixie Dust attack on a specified network:
  ```
-cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 -K
+cd FARHAN-Shot/File && sudo python3 FARHAN-Shot.py -i wlan0 -K
  ```
 Launch online WPS bruteforce with the specified first half of the PIN:
  ```
-cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -B -p 1234
+cd FARHAN-Shot/File && sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -B -p 1234
  ```
  Start WPS push button connection:s
  ```
-cd FARHAN-Shot && sudo python3 FARHAN-Shot.py -i wlan0 --pbc
+cd FARHAN-Shot/File && sudo python3 FARHAN-Shot.py -i wlan0 --pbc
  ```
 ## Troubleshooting
 #### "RTNETLINK answers: Operation not possible due to RF-kill"
