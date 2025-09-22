@@ -48,6 +48,12 @@ curl -sSf https://raw.githubusercontent.com/Gtajisan/FARHAN-Shot_Termux_installe
 To check for updates and update, `run` the following command:
 ```console
 (cd FARHAN-Shot && git pull)
+
+```
+### Update WIPWN to the latest version
+***To update your local repository to the latest commit from GitHub, use:***
+```console
+python3 update.py
 ```
 
 # FARHAN-Shot2_Termux_installer/Link ✔
