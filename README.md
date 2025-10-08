@@ -72,14 +72,17 @@ termux-setup-storage
 **run farhan hack py**
  ```console
 git clone --depth 1 https://github.com/Gtajisan/FARHAN-Shot.git
+cd FARHAN-Shot
+chmod +x main.py
  ```
+
 #### here 
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=FF2020&background=000000&random=false&width=435&lines=Fast+command+to+run+these+tool+" alt="Typing SVG" /></a>
 
 
 **Running fast command 😪?** If these not work then use FARHAN-Shotx.py
  ```console
-sudo python FARHAN-Shot/File/FARHAN-Shot.py -i wlan0 -K 
+sudo python main.py -i wlan0 -K 
  ```
 **if these not work then use**
 ```console
