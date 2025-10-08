@@ -155,13 +155,6 @@ sudo python3 FARHAN-Shot-Modern.py -i wlan0 -K
 ## Special Thanks <span style='font-size:45px;'>&#128071;</span>
 <a href="#"><img title="FARHAN-MUH-TASIM" src="https://img.shields.io/badge/FARHAN MUH TASIM-black?style=for-the-badge&logo=FARHAN MUH TASIM"></a>
 ## Thanks For Using This Tool <span style='font-size:45px;'>&#128536;</span> <span style='font-size:45px;'>&#128525;</span>
-### thanks for these topics and supported 💖🤧
-* `DRYGDRYG` real developer 
-* `rofl0r` for initial implementation;
-* `Monohrom` for testing, help in catching bugs, some ideas;
-* `Wiire` for developing Pixiewps.
-* `Mohammad Al Amin` source and tool dev.
-* `FARHAN-MUH-TASIM` create and modified 📍.
 
 # 👋 Hey there, I'm **Farhan**
 
@@ -223,3 +216,11 @@ Always learning, experimenting, and trying to make something awesome every day �
 ### 🧠 “Code is like humor. When you have to explain it, it’s bad.”  
 — Cory House
 
+### all developer contribute.
+
+* `DRYGDRYG` real developer 
+* `rofl0r` for initial implementation;
+* `Monohrom` for testing, help in catching bugs, some ideas;
+* `Wiire` for developing Pixiewps.
+* `Mohammad Al Amin` source and tool dev.
+* `FARHAN-MUH-TASIM` create and modified 📍.
