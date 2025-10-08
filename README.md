@@ -86,13 +86,13 @@ sudo python main.py -i wlan0 -K
  ```
 **if these not work then use**
 ```console
-cd FARHAN-Shot/File && sudo python3 FARHAN-Shot.py -i wlan0 -K
+cd FARHAN-Shot && sudo python3 main.py -i wlan0 -K
 ```
 
  #### copy to past bro 
  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=1000&color=FF0202&background=000000&multiline=true&random=false&width=435&lines=2Nd+command+%F0%9F%98%81%3F" alt="Typing SVG" /></a>
  ```console
- sudo python FARHAN-Shot/File/FARHAN-Shotx.py -i wlan0 -K 
+ sudo python FARHAN-Shot/main.py -i wlan0 -K 
  ```
 
 ### tool unstall cmd
