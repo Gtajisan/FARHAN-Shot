@@ -72,8 +72,8 @@ termux-setup-storage
 **run farhan hack py**
  ```console
 git clone --depth 1 https://github.com/Gtajisan/FARHAN-Shot.git
-cd FARHAN-Shot
-chmod +x main.py
+chmod +x FARHAN-Shot/main.py
+
  ```
 
 #### here 
@@ -82,7 +82,7 @@ chmod +x main.py
 
 **Running fast command 😪?** If these not work then use FARHAN-Shotx.py
  ```console
-sudo python main.py -i wlan0 -K 
+sudo python FARHAN-Shot/main.py -i wlan0 -K 
  ```
 **if these not work then use**
 ```console
