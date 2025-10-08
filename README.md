@@ -162,3 +162,64 @@ sudo python3 FARHAN-Shot-Modern.py -i wlan0 -K
 * `Wiire` for developing Pixiewps.
 * `Mohammad Al Amin` source and tool dev.
 * `FARHAN-MUH-TASIM` create and modified 📍.
+
+# 👋 Hey there, I'm **Farhan**
+
+Welcome to my GitHub profile!  
+I'm a passionate **developer, open-source enthusiast, and creator** who loves building tools, bots, and automation projects.  
+Always learning, experimenting, and trying to make something awesome every day 🚀
+
+---
+
+## 🧑‍💻 About Me
+
+- 🌍 Based in **Bangladesh**  
+- 💡 Interested in **automation, Android customization, and open-source development**  
+- 🧰 Tech Stack: **Python**, **JavaScript (Node.js)**, **Bash**, **HTML/CSS**, **GitHub Actions**, **Android (TWRP/Kernel/ROM/coder)**  
+- ⚙️ I enjoy creating tools that simplify workflow and boost productivity  
+- 📖 Currently exploring **AI APIs**, **advanced GitHub workflows**, and **custom ROM development**
+
+---
+
+## 🌐 Connect With Me
+
+<p align="left">
+  <a href="https://youtube.com/@zerox-farhan?si=fOn3eNxkdnS0HbtW" target="_blank">
+    <img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?&style=for-the-badge&logo=youtube&logoColor=white" />
+  </a>
+  <a href="https://www.facebook.com/share/1FLjnAgh64/" target="_blank">
+    <img src="https://img.shields.io/badge/Facebook-%231877F2.svg?&style=for-the-badge&logo=facebook&logoColor=white" />
+  </a>
+  <a href="https://www.instagram.com/frn_prime/profilecard/?igsh=MWltN3ozMmlyM3JhNg==" target="_blank">
+    <img src="https://img.shields.io/badge/Instagram-%23E4405F.svg?&style=for-the-badge&logo=instagram&logoColor=white" />
+  </a>
+  <a href="https://t.me/FARHAN_MUH_TASIM" target="_blank">
+    <img src="https://img.shields.io/badge/Telegram-%230088CC.svg?&style=for-the-badge&logo=telegram&logoColor=white" />
+  </a>
+  <a href="https://codepen.io/jisan-ff" target="_blank">
+    <img src="https://img.shields.io/badge/CodePen-%23131417.svg?&style=for-the-badge&logo=codepen&logoColor=white" />
+  </a>
+  <a href="https://github.com/Gtajisan" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white" />
+  </a>
+</p>
+
+---
+
+## 📫 Contact Me
+
+- 💌 **Email:** *(You can add your email here if you want)*  
+- 💬 **Telegram:** [@FARHAN_MUH_TASIM](https://t.me/FARHAN_MUH_TASIM)  
+- 👔 **LinkedIn:** *jisan ff*  
+
+---
+
+## ⚡ Fun Fact
+
+> I love creating things that make life easier — whether it’s automating a process, building a bot, or tweaking Android to perfection 
+
+---
+
+### 🧠 “Code is like humor. When you have to explain it, it’s bad.”  
+— Cory House
+
