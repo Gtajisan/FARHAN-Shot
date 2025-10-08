@@ -150,22 +150,15 @@ Please note that root access is required.
 sudo python3 FARHAN-Shot-Modern.py -i wlan0 -K
 ```
 ## Usage examples
-Start Pixie Dust attack on a specified BSSID:
- ```
-cd FARHAN-Shot/File && sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -K
- ```
-Show avaliable networks and start Pixie Dust attack on a specified network:
- ```
-cd FARHAN-Shot/File && sudo python3 FARHAN-Shot.py -i wlan0 -K
- ```
-Launch online WPS bruteforce with the specified first half of the PIN:
- ```
-cd FARHAN-Shot/File && sudo python3 FARHAN-Shot.py -i wlan0 -b 00:90:4C:C1:AC:21 -B -p 1234
- ```
- Start WPS push button connection:s
- ```
-cd FARHAN-Shot/File && sudo python3 FARHAN-Shot.py -i wlan0 --pbc
- ```
+
+| Command                                              | Description                 |
+| ---------------------------------------------------- | --------------------------- |
+| `sudo python main.py --help`                         | Show help options           |
+| `sudo python main.py -i wlan0 -K`                    | Scan and auto attack        |
+| `sudo python main.py -i wlan0 -b <BSSID> -K`         | Attack specific BSSID       |
+| `sudo python main.py -i wlan0 -b <BSSID> -B -p 1234` | Bruteforce using PIN prefix |
+| `bash FARHAN-Shot.sh`                                |Use Bash launcher to use     |
+
 ## Troubleshooting
 #### "RTNETLINK answers: Operation not possible due to RF-kill"
  Just run:
