@@ -89,12 +89,6 @@ sudo python FARHAN-Shot/main.py -i wlan0 -K
 cd FARHAN-Shot && sudo python3 main.py -i wlan0 -K
 ```
 
- #### copy to past bro 
- <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=1000&color=FF0202&background=000000&multiline=true&random=false&width=435&lines=2Nd+command+%F0%9F%98%81%3F" alt="Typing SVG" /></a>
- ```console
- sudo python FARHAN-Shot/main.py -i wlan0 -K 
- ```
-
 ### tool unstall cmd
 ```console
 rm -rf FARHAN-Shot
@@ -116,10 +110,10 @@ Please note that root access is required.
 # Usage
 | Command                                              | Description        |
 | ---------------------------------------------------- | ------------------ |
-| `sudo wipwn --help`                         | Show help options           |
-| `sudo wipwn -i wlan0 -K`                    | Scan and auto attack        |
-| `sudo wipwn -i wlan0 -b <BSSID> -K`         | Attack specific BSSID       |
-| `sudo wipwn -i wlan0 -b <BSSID> -B -p 1234` | Bruteforce using PIN prefix |
+| `sudo FARHAN-Shot --help`                         | Show help options           |
+| `sudo FARHAN-Shot -i wlan0 -K`                    | Scan and auto attack        |
+| `sudo FARHAN-Shot -i wlan0 -b <BSSID> -K`         | Attack specific BSSID       |
+| `sudo FARHAN-Shot -i wlan0 -b <BSSID> -B -p 1234` | Bruteforce using PIN prefix |
 
 #### Note: 
 + **First turn off your Wifi.**
