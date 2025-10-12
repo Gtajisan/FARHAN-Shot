@@ -1,3 +1,6 @@
+# 
+# Improve script structure and code for better readability
+#
 red = "\033[1;31m"
 green = "\033[1;32m"
 yellow = "\033[1;33m"
@@ -46,3 +49,10 @@ BG_BLUE = bg_blue
 BG_MAGENTA = bg_magenta
 BG_CYAN = bg_cyan
 BG_LIGHT_GRAY = bg_light_gray
+
+bold = "\033[1m"
+dim = "\033[2m"
+underline = "\033[4m"
+blink = "\033[5m"
+reverse = "\033[7m"
+hidden = "\033[8m"
