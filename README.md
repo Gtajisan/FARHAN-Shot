@@ -40,20 +40,11 @@ alt="termux🌚" height="30" width="40" /></a>
 Please note that root access is required.  
 ### Installation one line
 ```console
-echo -e "\033[1;36m[+] FARHAN-Shot Advanced Installer Started...\033[0m" && \
-command -v curl >/dev/null 2>&1 || { echo -e "\033[1;31m[-] curl not installed\033[0m"; exit 1; } && \
-command -v git >/dev/null 2>&1 || { echo -e "\033[1;31m[-] git not installed\033[0m"; exit 1; } && \
-echo -e "\033[1;33m[*] Running Termux dependency installer...\033[0m" && \
 curl -sSf https://raw.githubusercontent.com/Gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && \
-echo -e "\033[1;33m[*] Applying Termux sudo fix...\033[0m" && \
 curl -sL https://raw.githubusercontent.com/Gtajisan/Termux-fix/main/fix_sudo.sh | bash && \
-echo -e "\033[1;33m[*] Cleaning old FARHAN-Shot directory...\033[0m" && \
 sudo rm -rf FARHAN-Shot && \
-echo -e "\033[1;32m[✓] Cloning FARHAN-Shot repository...\033[0m" && \
 git clone --depth 1 https://github.com/Gtajisan/FARHAN-Shot.git && \
-echo -e "\033[1;32m[✓] Installation Completed Successfully!\033[0m" && \
-echo -e "\033[1;36m[→] Run: cd FARHAN-Shot && python FARHAN-Shot.py\033[0m"
-
+chmod +x FARHAN-Shot/main.py
 
 ```
 
