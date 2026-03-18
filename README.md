@@ -1,22 +1,79 @@
-# FARHAN-Shot - WiFi WPS Penetration Testing Tool
+<div align="center">
 
-Fast and automated WiFi WPS PIN cracking tool with advanced attack features.
+<img src="https://img.shields.io/badge/Platform-Termux%20%7C%20Android-3DDC84?style=for-the-badge&logo=android&logoColor=white"/>
+<img src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+<img src="https://img.shields.io/badge/License-Educational%20Use%20Only-red?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Version-0.0.2-blue?style=for-the-badge"/>
 
-> **⚠️ Note**: FARHAN-Shot is optimized for **Termux From F-Dorid** on Android. For best results and compatibility, use Termux. Kali/Debian support is legacy.
+# 🔐 FARHAN-Shot
+
+**Fast, automated WiFi WPS security auditing tool with advanced reconnaissance and attack simulation capabilities.**
+
+*Designed for authorized penetration testing and WiFi security research.*
+
+</div>
+
+---
+
+> [!WARNING]
+> **FARHAN-Shot is optimized for [Termux (F-Droid)](https://f-droid.org/en/packages/com.termux/) on Android.**
+> Kali Linux / Debian support is available but considered legacy. For best compatibility and performance, use Termux.
+
+---
+
+## 📑 Table of Contents
+
+- [Overview](#-overview)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Attack Modes](#-attack-modes)
+- [Command Reference](#-command-reference)
+- [Session Management](#-session-management)
+- [Reporting](#-reporting)
+- [File Structure](#-file-structure)
+- [Network Status Indicators](#-network-status-indicators)
+- [Output Reference](#-output-reference)
+- [Troubleshooting](#-troubleshooting)
+- [Legal Notice](#️-legal-notice)
+
+---
+
+## 🧭 Overview
+
+FARHAN-Shot is a feature-rich WPS (Wi-Fi Protected Setup) security auditing tool built for mobile penetration testers and security researchers. It wraps industry-standard tools — `aircrack-ng`, `wpa_supplicant`, and `pixiewps` — into a unified, scriptable CLI interface with session persistence, MAC spoofing, rate-limit bypass, reporting, and more.
+
+**Key capabilities:**
+
+- Pixie Dust, Brute Force, and Dictionary attack modes
+- Multi-threaded online bruteforce engine
+- Session save/resume across interrupted tests
+- Automated vulnerability list population
+- HTML, JSON, and CSV report generation
+- Advanced network reconnaissance & signal analysis
+- MAC address spoofing and rate-limit detection/bypass
+
+---
+
+## 🧰 Prerequisites
+
+Ensure the following are installed and accessible before running FARHAN-Shot:
+
+| Dependency       | Purpose                              |
+|------------------|--------------------------------------|
+| `Python 3.8+`    | Core runtime                         |
+| `aircrack-ng`    | Wireless interface management        |
+| `wpa_supplicant` | WPS protocol communication           |
+| `pixiewps`       | Pixie Dust offline attack engine     |
+| `Termux`         | Android terminal environment (recommended) |
 
 ---
 
 ## 📦 Installation
 
-### Prerequisites
-- Python 3.8+
-- aircrack-ng suite
-- wpa_supplicant
-- pixiewps
-- Termux
+### Termux (Recommended)
 
-
-### Install (Termux)
+Run the following one-liner to install FARHAN-Shot with all dependencies and patches:
 
 ```bash
 curl -sSf https://raw.githubusercontent.com/Gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && \
@@ -24,271 +81,280 @@ curl -sL https://raw.githubusercontent.com/Gtajisan/Termux-fix/main/fix_sudo.sh 
 sudo rm -rf FARHAN-Shot && \
 git clone --depth 1 https://github.com/Gtajisan/FARHAN-Shot.git && \
 chmod +x FARHAN-Shot/main.py
-
 ```
+
+> [!NOTE]
+> The installer handles dependency resolution, `sudo` patching, and a fresh clone automatically.
 
 ---
 
-## 🗑️ Uninstall
+### Uninstall
 
 ```bash
-
-# Remove FARHAN-Shot
+# Remove tool directory
 rm -rf /path/to/FARHAN-Shot
-```
 
-```bash
-
-# Remove sessions/data (optional)
+# Remove user data and session files (optional)
 rm -rf ~/.FARHAN-Shot/
 ```
 
 ---
 
-## 🚀 Basic Commands
+## 🚀 Usage
 
-### Start WiFi Scanning
+### Basic Syntax
+
 ```bash
+sudo python3 main.py -i <interface> [options]
+```
+
+### Quick Start Examples
+
+```bash
+# Scan for nearby WPS-enabled networks
 sudo python3 main.py -i wlan0
-```
 
-### Pixie Dust Attack
-```bash
+# Pixie Dust attack on a specific target
 sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K
-```
 
-### Brute Force Attack
-```bash
+# Brute force attack
 sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -B
-```
 
-### Dictionary Attack
-```bash
+# Dictionary attack with custom wordlist
 sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --dictionary-attack --wordlist /path/to/wordlist.txt
-```
 
-### With Results Saving
-```bash
-sudo python3 main.py -i wlan0 -K -w
-```
-
-### Auto-add to Vulnerability List
-```bash
-sudo python3 main.py -i wlan0 -K --auto-vuln-list
-```
-
-### Resume Session
-```bash
-sudo python3 main.py -i wlan0 --resume-session mysession
+# Full penetration test with reporting
+sudo python3 main.py -i wlan0 -K --advanced-recon --detect-weak-algo --spoof-mac --html-report --auto-vuln-list
 ```
 
 ---
 
-## 📋 Command Examples
+## ⚔️ Attack Modes
 
-### 1. Basic Target Attack
+### 1. Pixie Dust Attack
+
+Performs an offline cryptographic attack against vulnerable WPS implementations using `pixiewps`.
+
 ```bash
 sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K
 ```
-- `-i wlan0` : WiFi interface
-- `-b AA:BB:CC:DD:EE:FF` : Target BSSID
-- `-K` : Pixie Dust attack
 
-### 2. Multi-threaded Bruteforce
+### 2. Online Brute Force
+
+Multi-threaded sequential PIN guessing against the target AP.
+
 ```bash
-sudo python3 main.py -i wlan0 --online-bruteforce --bruteforce-threads 8 --pin-limit 5000
+sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --online-bruteforce --bruteforce-threads 8 --pin-limit 5000
 ```
 
-### 3. Detect Weak Algorithms
+### 3. Dictionary Attack
+
+Tests a list of known/common PINs from a wordlist file.
+
 ```bash
-sudo python3 main.py -i wlan0 --detect-weak-algo
+sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --dictionary-attack --wordlist /path/to/wordlist.txt
 ```
 
-### 4. Advanced Reconnaissance
-```bash
-sudo python3 main.py -i wlan0 --advanced-recon --signal-analysis
-```
+### 4. Custom PIN Test
 
-### 5. Bypass Rate Limiting
-```bash
-sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K --detect-rate-limit --bypass-rate-limit
-```
+Tests a single, known PIN directly.
 
-### 6. Full Penetration Test
-```bash
-sudo python3 main.py -i wlan0 \
-    -K \
-    --advanced-recon \
-    --detect-weak-algo \
-    --spoof-mac \
-    --html-report \
-    --auto-vuln-list
-```
-
-### 7. Session Management
-```bash
-# Create session
-sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K -s session1
-
-# Resume session
-sudo python3 main.py -i wlan0 --resume-session session1
-
-# List sessions
-sudo python3 main.py --list-sessions
-```
-
-### 8. Generate Reports
-```bash
-sudo python3 main.py -i wlan0 --html-report --detailed-report --report-dir ./reports
-```
-
-### 9. Custom PIN Testing
 ```bash
 sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -p 12345678
 ```
 
-### 10. Push Button Connect
+### 5. Push Button Connect (PBC)
+
+Simulates a physical WPS button press for PBC-based enrollment testing.
+
 ```bash
 sudo python3 main.py -i wlan0 --pbc
 ```
 
 ---
 
-## 🛠️ Common Options
+## 📋 Command Reference
 
-### Attack Options
-```bash
--K, --pixie-dust           Pixie Dust attack
--B, --bruteforce           Online bruteforce
--F, --pixie-force          Pixiewps force mode
---pbc                      Push button connect
---pin PIN                  Use specific PIN
---dictionary-attack        Dictionary password attack
-```
+### Attack Flags
 
-### Network Options
-```bash
--i, --interface            Interface (required)
--b, --bssid               Target BSSID
---session ID              Save/restore session
---channel-hop             Enable channel hopping
---spoof-mac               Spoof MAC address
-```
+| Flag | Long Form | Description |
+|------|-----------|-------------|
+| `-K` | `--pixie-dust` | Pixie Dust offline attack |
+| `-B` | `--bruteforce` | Online PIN brute force |
+| `-F` | `--pixie-force` | Pixiewps force mode |
+| `-p PIN` | `--pin PIN` | Test a specific PIN |
+| | `--pbc` | Push Button Connect |
+| | `--dictionary-attack` | Dictionary-based attack |
+| | `--wordlist FILE` | Path to wordlist file |
 
-### Detection & Bypass
-```bash
---detect-rate-limit       Check for rate limiting
---bypass-rate-limit       Attempt bypass
---detect-weak-algo        Find weak algorithms
---advanced-recon          Network fingerprinting
-```
+### Network & Interface
 
-### Results
-```bash
--w, --write               Save credentials
---auto-vuln-list          Add to vulnerability list
---html-report             Generate HTML report
---json-output FILE        Save results as JSON
---csv-output FILE         Save results as CSV
-```
+| Flag | Description |
+|------|-------------|
+| `-i IFACE` | Wireless interface (required) |
+| `-b BSSID` | Target AP MAC address |
+| `--channel-hop` | Enable dynamic channel hopping |
+| `--spoof-mac` | Randomize/spoof MAC address |
 
-### Performance
+### Detection & Evasion
+
+| Flag | Description |
+|------|-------------|
+| `--detect-rate-limit` | Detect AP-side rate limiting |
+| `--bypass-rate-limit` | Attempt to bypass rate limiting |
+| `--detect-weak-algo` | Identify weak WPS implementations |
+| `--advanced-recon` | Deep network fingerprinting |
+| `--signal-analysis` | Include signal strength analysis |
+
+### Output & Reporting
+
+| Flag | Description |
+|------|-------------|
+| `-w` | Save discovered credentials |
+| `--auto-vuln-list` | Append target to `vulnwsc.txt` |
+| `--html-report` | Generate an HTML report |
+| `--detailed-report` | Include verbose report data |
+| `--report-dir DIR` | Custom directory for reports |
+| `--json-output FILE` | Save results as JSON |
+| `--csv-output FILE` | Save results as CSV |
+
+### Performance Tuning
+
+| Flag | Description |
+|------|-------------|
+| `-t SEC` | Receive timeout in seconds |
+| `-d SEC` | Delay between attempts |
+| `-l SEC` | Wait time after AP lock |
+| `--bruteforce-threads N` | Thread count for brute force |
+
+---
+
+## 💾 Session Management
+
+FARHAN-Shot supports full session persistence — pause and resume long-running tests without losing progress.
+
 ```bash
--t, --timeout SEC         Receive timeout
--d, --delay SEC           Delay between attempts
--l, --lock-delay SEC      Wait after lock
---bruteforce-threads N    Number of threads
+# Start and save a named session
+sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K -s session1
+
+# Resume an existing session
+sudo python3 main.py -i wlan0 --resume-session session1
+
+# List all saved sessions
+sudo python3 main.py --list-sessions
 ```
 
 ---
 
-## 📁 Important Files
+## 📊 Reporting
+
+Generate structured reports after any test run:
+
+```bash
+sudo python3 main.py -i wlan0 --html-report --detailed-report --report-dir ./reports
+```
+
+Supported output formats:
+
+| Format | Flag | Use Case |
+|--------|------|----------|
+| HTML | `--html-report` | Human-readable browser report |
+| JSON | `--json-output FILE` | Programmatic/API consumption |
+| CSV | `--csv-output FILE` | Spreadsheet / SIEM ingestion |
+
+---
+
+## 📁 File Structure
 
 ```
 ~/.FARHAN-Shot/
-├── sessions/              # Saved sessions & cracked networks
-├── wordlists/             # Dictionary files
-└── reports/               # Generated reports
+├── sessions/          # Saved session states & cracked credentials
+├── wordlists/         # Custom dictionary files
+└── reports/           # Generated HTML/JSON/CSV reports
 
-vulnwsc.txt              # Vulnerability list
+vulnwsc.txt            # Running list of audited vulnerable networks
 ```
 
 ---
 
-## ✅ Output Indicators
+## 🌐 Network Status Indicators
 
-- `[+]` = Success
-- `[i]` = Information
-- `[!]` = Warning
-- `[-]` = Error
-- `[?]` = Question
+During scanning, each discovered network is color-coded based on its WPS state:
+
+| Color | Status | Meaning |
+|-------|--------|---------|
+| 🟢 Green | **Possibly Vulnerable** | WPS enabled, no active protection detected |
+| 🔴 Red | **WPS Locked** | AP is actively blocking WPS attempts |
+| 🟡 Yellow | **Already Stored** | Credentials previously cracked and saved in `vulnwsc.txt` |
+| ⚪ White | **Unclear / Needs Analysis** | WPS state ambiguous; further probing recommended |
 
 ---
 
-## 🎨 Network Status Colors
+## 📟 Output Reference
 
-Networks are marked with color indicators during scanning:
+All output lines are prefixed with a status indicator:
 
-- 🟢 **Green** - Possibly vulnerable (WPS enabled, no protection detected)
-- 🔴 **Red** - WPS locked (AP is actively blocking WPS attempts)
-- 🟡 **Yellow** - Already stored (Network credentials cracked and saved in vulnwsc.txt)
-- ⚪ **White** - Maybe vulnerable (WPS unclear, needs further analysis)
+| Prefix | Meaning |
+|--------|---------|
+| `[+]` | Success — operation completed |
+| `[i]` | Informational — status update |
+| `[!]` | Warning — non-fatal issue |
+| `[-]` | Error — operation failed |
+| `[?]` | Prompt — user input required |
 
 ---
 
 ## 🔧 Troubleshooting
 
-### Interface Not Found
+### Interface not found
+
 ```bash
+# List all wireless interfaces
 iwconfig
+
+# Check for monitor-mode capable adapters
 sudo airmon-ng
 ```
 
-### Permission Denied
+### Permission denied
+
 ```bash
+# Always run with elevated privileges
 sudo python3 main.py -i wlan0
 ```
 
-### Target Not Responding
+### Target not responding / timeout
+
 ```bash
-sudo python3 main.py -i wlan0 -b BSSID -K -t 20
+# Increase receive timeout
+sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K -t 20
 ```
 
-### Rate Limited
-```bash
-sudo python3 main.py -i wlan0 -b BSSID -K --bypass-rate-limit
-```
-
----
-
-## 🔄 Quick Reference
+### Rate limited by AP
 
 ```bash
-# Scan only
-sudo python3 main.py -i wlan0
-
-# Quick attack (Pixie Dust + Save)
-sudo python3 main.py -i wlan0 -b BSSID -K -w
-
-# Full test with reports
-sudo python3 main.py -i wlan0 --advanced-recon --html-report -w
-
-# Bruteforce
-sudo python3 main.py -i wlan0 -b BSSID -B --bruteforce-threads 8
-
-# Dictionary attack
-sudo python3 main.py -i wlan0 -b BSSID --dictionary-attack --wordlist wordlist.txt
+# Enable rate-limit bypass mode
+sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K --bypass-rate-limit
 ```
 
 ---
 
 ## ⚖️ Legal Notice
 
-**This tool is for authorized security testing ONLY.**
-- Only test networks you own or have permission to test
-- Unauthorized access is illegal
-- User assumes all responsibility
+> [!CAUTION]
+> **FARHAN-Shot is strictly intended for authorized security assessments.**
+
+- ✅ Only test networks you **own** or have **explicit written permission** to test
+- ❌ Unauthorized access to computer networks is a **criminal offense** in most jurisdictions
+- 📋 The developer assumes **no liability** for misuse or illegal activity
+- 🔒 Use responsibly, ethically, and in compliance with all applicable laws
 
 ---
 
-**OneShot v0.0.2** | Modified by @Mohammad Alamin
+<div align="center">
+
+**FARHAN-Shot v0.0.2** &nbsp;|&nbsp; Modified by [@Mohammad Alamin](https://github.com/Gtajisan)
+
+*Built for security professionals. Use with permission. Use with purpose.*
+
+</div>
