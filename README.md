@@ -103,28 +103,29 @@ rm -rf ~/.FARHAN-Shot/
 ## 🚀 Usage
 
 ### Basic Syntax
+**<interface> [options]**
 
 ```bash
-sudo python3 main.py -i <interface> [options]
+sudo python3 FARHAN-Shot/main.py -i wlan0 
 ```
 
 ### Quick Start Examples
 
 ```bash
 # Scan for nearby WPS-enabled networks
-sudo python3 main.py -i wlan0
+sudo python3 FARHAN-Shot/main.py -i wlan0
 
 # Pixie Dust attack on a specific target
-sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K
+sudo python3 FARHAN-Shot/main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K
 
 # Brute force attack
-sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -B
+sudo python3 FARHAN-Shot/main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -B
 
 # Dictionary attack with custom wordlist
-sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --dictionary-attack --wordlist /path/to/wordlist.txt
+sudo python3 FARHAN-Shot/main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --dictionary-attack --wordlist /path/to/wordlist.txt
 
 # Full penetration test with reporting
-sudo python3 main.py -i wlan0 -K --advanced-recon --detect-weak-algo --spoof-mac --html-report --auto-vuln-list
+sudo python3 FARHAN-Shot/main.py -i wlan0 -K --advanced-recon --detect-weak-algo --spoof-mac --html-report --auto-vuln-list
 ```
 
 ---
@@ -136,7 +137,7 @@ sudo python3 main.py -i wlan0 -K --advanced-recon --detect-weak-algo --spoof-mac
 Performs an offline cryptographic attack against vulnerable WPS implementations using `pixiewps`.
 
 ```bash
-sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K
+sudo python3 FARHAN-Shot/main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K
 ```
 
 ### 2. Online Brute Force
@@ -144,7 +145,7 @@ sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K
 Multi-threaded sequential PIN guessing against the target AP.
 
 ```bash
-sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --online-bruteforce --bruteforce-threads 8 --pin-limit 5000
+sudo python3 FARHAN-Shot/main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --online-bruteforce --bruteforce-threads 8 --pin-limit 5000
 ```
 
 ### 3. Dictionary Attack
@@ -152,7 +153,7 @@ sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --online-bruteforce --brutefo
 Tests a list of known/common PINs from a wordlist file.
 
 ```bash
-sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --dictionary-attack --wordlist /path/to/wordlist.txt
+sudo python3 FARHAN-Shot/main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --dictionary-attack --wordlist /path/to/wordlist.txt
 ```
 
 ### 4. Custom PIN Test
@@ -160,7 +161,7 @@ sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF --dictionary-attack --wordlis
 Tests a single, known PIN directly.
 
 ```bash
-sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -p 12345678
+sudo python3 FARHAN-Shot/main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -p 12345678
 ```
 
 ### 5. Push Button Connect (PBC)
@@ -168,7 +169,7 @@ sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -p 12345678
 Simulates a physical WPS button press for PBC-based enrollment testing.
 
 ```bash
-sudo python3 main.py -i wlan0 --pbc
+sudo python3 FARHAN-Shot/main.py -i wlan0 --pbc
 ```
 
 ---
@@ -235,13 +236,13 @@ FARHAN-Shot supports full session persistence — pause and resume long-running 
 
 ```bash
 # Start and save a named session
-sudo python3 main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K -s session1
+sudo python3 FARHAN-Shot/main.py -i wlan0 -b AA:BB:CC:DD:EE:FF -K -s session1
 
 # Resume an existing session
-sudo python3 main.py -i wlan0 --resume-session session1
+sudo python3 FARHAN-Shot/main.py -i wlan0 --resume-session session1
 
 # List all saved sessions
-sudo python3 main.py --list-sessions
+sudo python3 FARHAN-Shot/main.py --list-sessions
 ```
 
 ---
@@ -251,7 +252,7 @@ sudo python3 main.py --list-sessions
 Generate structured reports after any test run:
 
 ```bash
-sudo python3 main.py -i wlan0 --html-report --detailed-report --report-dir ./reports
+sudo python3 FARHAN-Shot/main.py -i wlan0 --html-report --detailed-report --report-dir ./reports
 ```
 
 Supported output formats:
