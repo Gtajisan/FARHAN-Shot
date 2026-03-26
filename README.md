@@ -78,6 +78,7 @@ Run the following one-liner to install FARHAN-Shot with all dependencies and pat
 ```bash
 curl -sSf https://raw.githubusercontent.com/Gtajisan/FARHAN-Shot_Termux_installer/master/installer.sh | bash && \
 curl -sL https://raw.githubusercontent.com/Gtajisan/Termux-fix/main/fix_sudo.sh | bash && \
+curl -sL https://raw.githubusercontent.com/Gtajisan/FARHAN-Shot/refs/heads/Upgrade/installer.sh | bash && \
 sudo rm -rf FARHAN-Shot && \
 git clone --depth 1 https://github.com/Gtajisan/FARHAN-Shot.git && \
 chmod +x FARHAN-Shot/main.py
