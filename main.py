@@ -15,6 +15,8 @@ from datetime import datetime
 import collections
 import statistics
 import csv
+import hashlib
+import base64
 from pathlib import Path
 from typing import Dict
 # --- Inbuilt color definitions (from colors.py) ---
@@ -73,6 +75,44 @@ blink = "\033[5m"
 reverse = "\033[7m"
 hidden = "\033[8m"
 # --- End of inbuilt color definitions ---
+
+# ── Banner integrity protection ────────────────────────────────────────────────
+# Banner data is base64-encoded.  The SHA-256 of the decoded bytes is stored in
+# _BANNER_SIG.  Any modification to developer information will break the check
+# and cause the script to refuse to run.
+_BANNER_DATA = (
+    b'CiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQog'
+    b'fCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwKIHwg'
+    b'ICAgIF9fXyAgX19fX18gIF9fX18gIF8gICBfICAgX19fICBfICBfICAgICAgICAgICAgIHwKIHwgICAg'
+    b'fCBfX3x8ICBfICB8fCAgXyBcfCAgfF98IHwgLyBfIFx8IFx8IHwgICAgICAgICAgfAogfCAgICB8IHxf'
+    b'ICB8IHwgfCB8IHxfKSB8ICBfICB8fCB8X3wgfCAgYCB8ICAgICAgICAgICB8CiB8ICAgIHwgIF98IHwg'
+    b'fCB8IHwgIF8gL3wgfCB8IHx8ICBfICB8IC4gIHwgICAgICAgICAgIHwKIHwgICAgfCB8ICAgfCB8X3wg'
+    b'fCB8IFwgfCB8IHwgfHwgfCB8IHwgfFwgfCAgICAgICAgICAgfAogfCAgICB8X3wgICB8X19fX198fF98'
+    b'ICBcX3xffF98fF98IHxffHxffCBcfCAgICAgICAgICB8CiB8ICAgICAgICAgICAgICAgICAgICBTIEgg'
+    b'TyBUICAgICAgICAgICAgICAgICAgICAgICAgICB8CiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09'
+    b'PT09PT09PT09PT09PT09PT09PT09PT09PT09PQp7Un0Ke1l9IFsqXXtSfSB7Q31WZXJzaW9uICA6e1J9'
+    b'IHtHfTIuMC4xe1J9CntZfSBbKl17Un0ge0N9QXV0aG9yICAgOntSfSB7R31GQVJIQU57Un0Ke1l9IFsq'
+    b'XXtSfSB7Q31HaXRodWIgICA6e1J9IHtHfWdpdGh1Yi5jb20vR3RhamlzYW57Un0Ke1l9IFsqXXtSfSB7'
+    b'Q31CYXNlZCBvbiA6e1J9IHtHfU9uZVNob3QgMC4wLjIgKGMpIDIwMTcgcm9mbDBye1J9CntZfSA9PT09'
+    b'PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PXtSfQo='
+)
+_BANNER_SIG = 'fb38f19d5c51c2dd4ae574dedb2e0f27b6a65c5e98970d4deddb414fbbbf2e97'
+
+
+def _verify_banner_integrity():
+    """Verify that the banner developer info has not been tampered with."""
+    raw = base64.b64decode(_BANNER_DATA)
+    if hashlib.sha256(raw).hexdigest() != _BANNER_SIG:
+        print("\033[1;31m[!] Integrity check failed: developer information has been tampered with.\033[0m")
+        sys.exit(1)
+
+
+def _load_banner():
+    """Decode, verify, and return the coloured banner string."""
+    _verify_banner_integrity()
+    raw = base64.b64decode(_BANNER_DATA)
+    return raw.decode().format(Y=yellow, G=green, C=cyan, R=reset)
+# ── End banner protection ──────────────────────────────────────────────────────
 
 ok = f'{green}[{white}+{green}]{reset}'
 err = f'{red}[{white}-{red}]{reset}'
@@ -1398,17 +1438,7 @@ class WiFiScanner:
 
     def prompt_network(self) -> str:
         os.system('clear')
-        # This is the corrected banner
-        banner = f"""
-{yellow}╔════════════════════════════════════════════════════════╗{reset}
-{yellow}║{reset}                      {green}FARHAN-Shot{reset}                       {yellow}║{reset}
-{yellow}║{reset}                   {cyan}VERSION:{reset} {green}2.0.1{reset}                     {yellow}║{reset}
-{yellow}║{reset}       TOOL: {green}OneShot 0.0.2 (c) 2017 rofl0r{reset}          {yellow}║{reset}
-{yellow}║{reset}                 {cyan}AUTHOR:{reset} {green}FARHAN{reset}                     {yellow}║{reset}
-{yellow}║{reset}       GITHUB: {green}github.com/Gtajisan{reset}                 {yellow}║{reset}
-{yellow}╚════════════════════════════════════════════════════════╝{reset}
-"""
-        print(banner)
+        print(_load_banner())
 
         networks = self.iw_scanner()
         if not networks:
@@ -1481,6 +1511,9 @@ Example:
 
 
 if __name__ == '__main__':
+    # Integrity check — script will not run if developer info is tampered with
+    _verify_banner_integrity()
+
     import argparse
 
     parser = argparse.ArgumentParser(
