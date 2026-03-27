@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "NOd5iGiqKM7zaWjlkgUJt"
+uri = "file://changes.txt"
+type = "text"
+title = "FARHAN-Shot — Full Changelog"

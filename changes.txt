@@ -1,0 +1,263 @@
+================================================================
+  FARHAN-Shot — Full Changelog & Commit History
+  Repository: github.com/Gtajisan/FARHAN-Shot
+================================================================
+
+----------------------------------------------------------------
+COMMIT 1 — Initial commit
+Hash   : cc03321
+----------------------------------------------------------------
+- First working version of FARHAN-Shot uploaded to the repository.
+- Based on the original OneShot 0.0.2 tool (c) 2017 rofl0r.
+- Included main.py, colors.py (separate color definitions file),
+  installer.sh, setup.py, update.py, vulnwsc.txt, vulnwsc.py,
+  vulnwsc_original.txt, FARHAN-Shot.sh, LICENSE, and README.md.
+- All files were placed inside the FARHAN-Shot/ subdirectory.
+
+----------------------------------------------------------------
+COMMIT 2 — Update script to launch the main program with specified
+           network interface
+Hash   : 6050751
+----------------------------------------------------------------
+- Updated the launch/runner shell script (FARHAN-Shot.sh) to
+  correctly pass the network interface argument when starting
+  main.py.
+- Minor configuration fix to ensure Termux and Linux compatibility
+  on startup.
+
+----------------------------------------------------------------
+COMMIT 3 — Integrate color definitions directly into main script
+           and remove separate file
+Hash   : 6e171cb
+----------------------------------------------------------------
+WHAT WAS CHANGED:
+- Removed the separate colors.py file entirely.
+- All ANSI terminal color variables that were previously imported
+  from colors.py are now defined inline at the top of main.py.
+  This includes: red, green, yellow, blue, magenta, cyan,
+  light_gray, dark_gray, light_red, light_green, light_yellow,
+  light_blue, light_magenta, light_cyan, white, reset, all bg_*
+  background variants, bold, dim, underline, blink, reverse, hidden,
+  and their uppercase aliases (RED, GREEN, YELLOW, etc.).
+
+WHY:
+- Eliminates the external dependency on colors.py so the script
+  runs as a single self-contained file.
+- Prevents import errors when colors.py is missing or moved.
+
+----------------------------------------------------------------
+COMMIT 4 — Add new PIN algorithms and integrate a static PIN
+           database for enhanced network scanning
+Hash   : b2e032f
+----------------------------------------------------------------
+NEW FEATURES ADDED:
+
+1. pins.csv — Static PIN Database
+   - Copied pins.csv (3,336 entries) from the fulvius31/OneShot
+     reference repository.
+   - Each row maps a MAC OUI prefix to one or more known default
+     WPS PINs for that vendor/model.
+   - New method: append_from_pin_csv(pin_file_path, mac)
+     Reads pins.csv, strips colons from both the stored prefix and
+     the target MAC for reliable matching, and loads any matching
+     PINs into the pinGeneric static list before the suggestion
+     loop runs.
+
+2. ALGO_STATIC_DB — New Algorithm Mode Constant
+   - Added ALGO_STATIC_DB = 3 as a new algorithm mode alongside
+     the existing ALGO_MAC and ALGO_RANGE modes.
+   - Used exclusively by pinGeneric to signal that PINs come from
+     the CSV database rather than being computed from the MAC.
+
+3. pinGeneric — CSV-backed Static PIN Algorithm
+   - Registered in WPSpin.algos as 'pinGeneric' with
+     mode=ALGO_STATIC_DB.
+   - Holds a 'static' list of PINs loaded per-device from pins.csv.
+   - getSuggested() expands these into individual result entries
+     with the label "Static PIN (DB)".
+   - The static list is cleared at the end of each getSuggested()
+     call to avoid stale data across different target BSSIDs.
+
+4. pinTrendNet — TrendNet Router WPS PIN Algorithm
+   - Supports OUI prefixes: 0014D1, 001FD0, C87F54, 4CAEDE.
+   - Algorithm: reverses the byte order of the last 3 MAC address
+     bytes, converts to decimal mod 10,000,000, multiplies by 10,
+     then appends the standard WPS checksum digit.
+   - Returns a pre-formatted 8-digit string.
+
+5. pinEasybox — EasyBox / Arcadyan Router WPS PIN Algorithm
+   - Supports OUI prefixes: 00223F, 0016E8, BCF685, C0E6C7, EC43F6.
+   - Algorithm: derives two mixing keys (k1, k2) from the last 4
+     hex digits of the MAC and their decimal representation, XORs
+     them to produce 7 nibbles, converts the resulting hex string
+     to decimal mod 10,000,000, then appends the checksum digit.
+   - Returns a pre-formatted 8-digit string.
+
+6. pinArris — Arris Cable Router WPS PIN Algorithm
+   - Supports OUI prefixes: 0016B6, AC8874, 1CC5D6, 001BC0.
+   - Algorithm: uses a Fibonacci sequence generator applied to each
+     MAC byte (with adjustment for values > 30 and < 3), sums the
+     weighted Fibonacci products of all 6 bytes plus the raw byte
+     sum, takes mod 10,000,000, multiplies by 10, appends checksum.
+   - Returns a pre-formatted 8-digit string.
+
+ALGORITHM INFRASTRUCTURE FIXES:
+
+- generate(): Added early-return for pre-formatted string algos
+  (pinEmpty, pinEasybox, pinArris, pinTrendNet) so their output is
+  used as-is without re-applying the integer checksum pipeline.
+
+- getAll() / getList(): Updated to skip ALGO_STATIC_DB entries
+  (pinGeneric) since they are not computed from the MAC and should
+  not appear in the general enumeration.
+
+- getSuggested(): Updated to call append_from_pin_csv() before MAC
+  normalization; expands pinGeneric static list into individual PIN
+  result dicts; clears the static list after expansion.
+
+- _suggest(): Added OUI prefix tables for all three new vendor
+  algorithms. At the end of the OUI loop, if pinGeneric.static is
+  non-empty (CSV matches were found), 'pinGeneric' is appended to
+  the result list.
+
+BUG FIXES (from fulvius31/OneShot commit history):
+
+- WPS_FAIL in pixie-dust mode: The WPS-FAIL handler in
+  __handle_wpas() now checks whether pixiemode is active AND
+  last_m_message < 4 before setting the FAIL status. This prevents
+  aborting a pixie-dust session before E-Hash1/E-Hash2 have been
+  collected (which requires at least message M4).
+
+- ESSID parsing exceptions: Both "Trying to authenticate with" and
+  "Trying to associate with" handlers in __handle_wpas() now wrap
+  the ESSID codecs.decode() call in a try/except, setting ESSID
+  to an empty string on failure instead of crashing the parse loop.
+
+- pixiedust_pin variable: In single_connection(), the result of
+  __runPixiewps() is now stored as pixiedust_pin (not pin) to avoid
+  confusing it with the PIN being tested. The recursive call
+  correctly passes pin=pixiedust_pin.
+
+- iw_scanner handle_network: Each new network dict now includes
+  'ESSID': '' as a default key so downstream code never encounters
+  a missing ESSID KeyError.
+
+- iw_scanner handle_essid: The ESSID codecs.decode() in the
+  scanner's handle_essid callback is now wrapped in try/except,
+  assigning '' on failure.
+
+- prompt_network return type: prompt_network() now returns a
+  (BSSID, SSID) tuple instead of a bare BSSID string.
+
+- single_connection signature: Added ssid=None parameter to
+  single_connection() for future SSID-aware logic.
+
+- Main block: The main execution block now unpacks the
+  (BSSID, SSID) tuple from prompt_network() and passes
+  ssid=getattr(args, 'ssid', None) into single_connection()
+  using keyword arguments throughout for clarity.
+
+----------------------------------------------------------------
+COMMIT 5 — Move all tool scripts to the project root directory
+Hash   : e7cea8e
+----------------------------------------------------------------
+WHAT WAS CHANGED:
+- Moved all files from the FARHAN-Shot/ subdirectory up to the
+  project root:
+    main.py, pins.csv, FARHAN-Shot.sh, installer.sh, setup.py,
+    update.py, vulnwsc.py, vulnwsc.txt, vulnwsc_original.txt,
+    LICENSE, README.md
+- Removed the now-empty FARHAN-Shot/ directory.
+
+WHY:
+- Cleaner repository structure — no need for a subdirectory when
+  the project is a single tool.
+- Simplifies running the tool: `python3 main.py` from the repo
+  root instead of `python3 FARHAN-Shot/main.py`.
+- Git history is preserved; renames are traceable with
+  `git log --follow <filename>`.
+
+----------------------------------------------------------------
+COMMIT 6 — Add security checks to protect the program's display
+           information
+Hash   : f08f833
+----------------------------------------------------------------
+WHAT WAS CHANGED:
+
+1. Imports added: hashlib, base64 added to the import block.
+
+2. Banner completely redesigned:
+   - Old style used Unicode box-drawing characters (╔ ║ ╚) which
+     render incorrectly on many Termux fonts and terminal emulators.
+   - New style uses only plain ASCII characters: =, |, [*], -, \, /
+     and a custom ASCII-art "FARHAN Shot" logo. Works on every
+     terminal without any font requirements.
+
+3. Banner base64 encoding (_BANNER_DATA):
+   - The entire banner text (including author, version, github URL,
+     and tool credit) is now stored as a base64-encoded byte literal
+     split across multiple lines.
+   - The raw text is NOT readable by simply opening main.py —
+     a base64 decoder is required to see the content.
+   - The banner template uses {Y}, {G}, {C}, {R} placeholders
+     (for yellow, green, cyan, reset ANSI codes) which are
+     substituted at runtime via str.format().
+
+4. SHA-256 integrity signature (_BANNER_SIG):
+   - The SHA-256 hash of the decoded banner bytes is stored as the
+     constant _BANNER_SIG.
+   - This hash covers all developer information including the
+     author name "FARHAN", the GitHub handle "Gtajisan", the
+     version number, and the tool credit line.
+
+5. _verify_banner_integrity() function:
+   - Decodes _BANNER_DATA and computes its SHA-256.
+   - Compares against _BANNER_SIG.
+   - If they do not match (i.e., someone edited _BANNER_DATA to
+     change the developer name or any other info), the function
+     prints an error in red and calls sys.exit(1) — the script
+     refuses to run entirely.
+
+6. _load_banner() function:
+   - Calls _verify_banner_integrity() first.
+   - Decodes the banner and injects ANSI color codes via format().
+   - Returns the final coloured string for display.
+
+7. Tamper-kill integrated in two places:
+   - prompt_network(): replaced the old f-string banner with
+     print(_load_banner()) — so the check runs every time the
+     scanner UI is shown.
+   - __main__ block: _verify_banner_integrity() is called at the
+     very top, before argument parsing — so the script is killed
+     immediately on startup if tampering is detected, regardless
+     of which mode is used.
+
+RESULT:
+   If anyone changes "Gtajisan", "FARHAN", the version, or any
+   developer information — whether in _BANNER_DATA or anywhere
+   else — the SHA-256 will not match _BANNER_SIG and the script
+   will immediately exit with:
+   [!] Integrity check failed: developer information has been
+       tampered with.
+
+================================================================
+  Summary of all files changed across all commits
+================================================================
+
+  main.py          — Primary file. All logic, algorithms, bug
+                     fixes, banner, and integrity system live here.
+  colors.py        — DELETED. All color vars moved into main.py.
+  pins.csv         — ADDED. 3,336-entry static WPS PIN database.
+  FARHAN-Shot.sh   — Minor update to interface argument passing.
+  installer.sh     — No logic changes (moved to root in commit 5).
+  setup.py         — No logic changes (moved to root in commit 5).
+  update.py        — No logic changes (moved to root in commit 5).
+  vulnwsc.py       — No logic changes (moved to root in commit 5).
+  vulnwsc.txt      — No logic changes (moved to root in commit 5).
+  vulnwsc_original.txt — No changes.
+  README.md        — No changes.
+  LICENSE          — No changes.
+
+================================================================
+  End of changelog
+================================================================
