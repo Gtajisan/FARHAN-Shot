@@ -116,11 +116,7 @@ Please note that root access is required.
 + **Turn on Hotspot.**
 + **Turn on Location.**
 
-+ enjoy 🌕👀
-## pushed new runner 
-```
-sudo python3 FARHAN-Shot-Modern.py -i wlan0 -K
-```
+
 ## Usage examples
 
 | Command                                              | Description                 |
