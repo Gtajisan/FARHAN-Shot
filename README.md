@@ -1,8 +1,5 @@
 ### FARHAN-Shot
 
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=35F700&background=3C8BFF00&random=false&width=435&lines=Thanks+for+use+my+command+;place+don't+forged+start+;Im+farhan+hi;Facebook%3A+farhan+muh+tasin" alt="Typing SVG" /></a>
-
-
 ### Hola, bienvenid@ **TERMUX** REPO CLEAN FILES.. 
 **Watch YouTube THES Video- Watch Facebook These Video**
 <a href="https://youtu.be/5janYQg1-Yw?si=jua2TI2c_k9slAkC" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="zerox-farhan" height="30" width="40" /></a>
