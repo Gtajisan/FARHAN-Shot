@@ -81,22 +81,15 @@ hidden = "\033[8m"
 # _BANNER_SIG.  Any modification to developer information will break the check
 # and cause the script to refuse to run.
 _BANNER_DATA = (
-    b'CiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQog'
-    b'fCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwKIHwg'
-    b'ICAgIF9fXyAgX19fX18gIF9fX18gIF8gICBfICAgX19fICBfICBfICAgICAgICAgICAgIHwKIHwgICAg'
-    b'fCBfX3x8ICBfICB8fCAgXyBcfCAgfF98IHwgLyBfIFx8IFx8IHwgICAgICAgICAgfAogfCAgICB8IHxf'
-    b'ICB8IHwgfCB8IHxfKSB8ICBfICB8fCB8X3wgfCAgYCB8ICAgICAgICAgICB8CiB8ICAgIHwgIF98IHwg'
-    b'fCB8IHwgIF8gL3wgfCB8IHx8ICBfICB8IC4gIHwgICAgICAgICAgIHwKIHwgICAgfCB8ICAgfCB8X3wg'
-    b'fCB8IFwgfCB8IHwgfHwgfCB8IHwgfFwgfCAgICAgICAgICAgfAogfCAgICB8X3wgICB8X19fX198fF98'
-    b'ICBcX3xffF98fF98IHxffHxffCBcfCAgICAgICAgICB8CiB8ICAgICAgICAgICAgICAgICAgICBTIEgg'
-    b'TyBUICAgICAgICAgICAgICAgICAgICAgICAgICB8CiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09'
-    b'PT09PT09PT09PT09PT09PT09PT09PT09PT09PQp7Un0Ke1l9IFsqXXtSfSB7Q31WZXJzaW9uICA6e1J9'
-    b'IHtHfTIuMC4xe1J9CntZfSBbKl17Un0ge0N9QXV0aG9yICAgOntSfSB7R31GQVJIQU57Un0Ke1l9IFsq'
-    b'XXtSfSB7Q31HaXRodWIgICA6e1J9IHtHfWdpdGh1Yi5jb20vR3RhamlzYW57Un0Ke1l9IFsqXXtSfSB7'
-    b'Q31CYXNlZCBvbiA6e1J9IHtHfU9uZVNob3QgMC4wLjIgKGMpIDIwMTcgcm9mbDBye1J9CntZfSA9PT09'
-    b'PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PXtSfQo='
+    b'CntZfSA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PXtSfQp7WX0gWypd'
+    b'e1J9IHtDfVRvb2wgICAgIDp7Un0ge0d9RkFSSEFOLVNob3R7Un0Ke1l9IFsqXXtSfSB7Q31WZXJz'
+    b'aW9uICA6e1J9IHtHfTIuMC4xe1J9CntZfSBbKl17Un0ge0N9QXV0aG9yICAgOntSfSB7R31GQVJI'
+    b'QU57Un0Ke1l9IFsqXXtSfSB7Q31HaXRodWIgICA6e1J9IHtHfWdpdGh1Yi5jb20vR3RhamlzYW57'
+    b'Un0Ke1l9IFsqXXtSfSB7Q31CYXNlZCBvbiA6e1J9IHtHfU9uZVNob3QgMC4wLjIgKGMpIDIwMTcg'
+    b'cm9mbDBye1J9CntZfSA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PXtS'
+    b'fQo='
 )
-_BANNER_SIG = 'fb38f19d5c51c2dd4ae574dedb2e0f27b6a65c5e98970d4deddb414fbbbf2e97'
+_BANNER_SIG = 'a4e47ecde650ebd312b390778f78fc2dd81666ec71a85508e0ca6ff5c7cf6d35'
 
 
 def _verify_banner_integrity():
@@ -425,8 +418,10 @@ class WPSpin:
         if algo not in self.algos:
             raise ValueError(f'{err} Invalid WPS pin algorithm')
         pin = self.algos[algo]['gen'](mac)
-        # These algos return a pre-formatted string with checksum already included
-        if algo in ('pinEmpty', 'pinEasybox', 'pinArris', 'pinTrendNet'):
+        # If the generator already returned a string (pre-formatted with checksum
+        # or an empty placeholder), return it directly — do NOT run the integer
+        # checksum pipeline on it, which would raise a TypeError.
+        if isinstance(pin, str):
             return pin
         pin = pin % 10000000
         pin = str(pin) + str(self.checksum(pin))
@@ -493,12 +488,23 @@ class WPSpin:
 
     def getSuggestedList(self, mac):
         """
-        Get all suggested WPS pin's for single MAC as list
+        Get all suggested WPS pin's for single MAC as list.
+        CSV-backed (ALGO_STATIC_DB) entries are expanded directly;
+        computed algos are generated normally; empty results are skipped.
         """
         algos = self._suggest(mac)
         res = []
-        for algo in algos:
-            res.append(self.generate(algo, mac))
+        for algo_id in algos:
+            algo = self.algos[algo_id]
+            if algo['mode'] == self.ALGO_STATIC_DB:
+                # Expand static CSV pins directly — do NOT call generate()
+                res.extend(p for p in self.algos['pinGeneric']['static'] if p)
+            else:
+                pin = self.generate(algo_id, mac)
+                if pin:  # skip empty placeholders (e.g. pinEmpty on miss)
+                    res.append(pin)
+        # Clear CSV cache so it is fresh for the next MAC lookup
+        self.algos['pinGeneric']['static'].clear()
         return res
 
     def getLikely(self, mac):
