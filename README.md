@@ -2,13 +2,8 @@
 
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=35F700&background=3C8BFF00&random=false&width=435&lines=Thanks+for+use+my+command+;place+don't+forged+start+;Im+farhan+hi;Facebook%3A+farhan+muh+tasin" alt="Typing SVG" /></a>
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&random=false&width=435&lines=im-farhan-thanks-for-my-cmd-use)](https://git.io/typing-svg)
 
 ### Hola, bienvenid@ **TERMUX** REPO CLEAN FILES.. 
-..using  *wifi-hack* by Termux/Android, FARHAN-😫!!
-<br><br>
-![termuxICO](https://user-images.githubusercontent.com/80227002/112893051-6feceb00-90da-11eb-856d-1fac8f6d169a.png)!##---
-<br><br>
 **Watch YouTube THES Video- Watch Facebook These Video**
 <a href="https://youtu.be/5janYQg1-Yw?si=jua2TI2c_k9slAkC" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="zerox-farhan" height="30" width="40" /></a>
 <a href="https://m.facebook.com/story.php?story_fbid=pfbid0EHHt7trGAv99XWDk1onVJ8XPTRZzv7KNfschNu7K9yjvo3Vh3jTLcxMPDkGm9D15l&id=100094924471568&mibextid=ZbWKwL" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="farhan muh tasim" height="30" width="40" /></a>
@@ -84,7 +79,7 @@ chmod +x FARHAN-Shot/main.py
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=FF2020&background=000000&random=false&width=435&lines=Fast+command+to+run+these+tool+" alt="Typing SVG" /></a>
 
 
-**Running fast command 😪?** If these not work then use FARHAN-Shotx.py
+**Running fast command ?** If these not work then use FARHAN-Shotx.py
  ```console
 sudo python FARHAN-Shot/main.py -i wlan0 -K 
  ```
@@ -154,65 +149,6 @@ sudo python3 FARHAN-Shot-Modern.py -i wlan0 -K
 <a href="#"><img title="FARHAN-MUH-TASIM" src="https://img.shields.io/badge/FARHAN MUH TASIM-black?style=for-the-badge&logo=FARHAN MUH TASIM"></a>
 ## Thanks For Using This Tool <span style='font-size:45px;'>&#128536;</span> <span style='font-size:45px;'>&#128525;</span>
 
-# 👋 Hey there, I'm **Farhan**
-
-Welcome to my GitHub profile!  
-I'm a passionate **developer, open-source enthusiast, and creator** who loves building tools, bots, and automation projects.  
-Always learning, experimenting, and trying to make something awesome every day 🚀
-
----
-
-## 🧑‍💻 About Me
-
-- 🌍 Based in **Bangladesh**  
-- 💡 Interested in **automation, Android customization, and open-source development**  
-- 🧰 Tech Stack: **Python**, **JavaScript (Node.js)**, **Bash**, **HTML/CSS**, **GitHub Actions**, **Android (TWRP/Kernel/ROM/coder)**  
-- ⚙️ I enjoy creating tools that simplify workflow and boost productivity  
-- 📖 Currently exploring **AI APIs**, **advanced GitHub workflows**, and **custom ROM development**
-
----
-
-## 🌐 Connect With Me
-
-<p align="left">
-  <a href="https://youtube.com/@zerox-farhan?si=fOn3eNxkdnS0HbtW" target="_blank">
-    <img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?&style=for-the-badge&logo=youtube&logoColor=white" />
-  </a>
-  <a href="https://www.facebook.com/share/1FLjnAgh64/" target="_blank">
-    <img src="https://img.shields.io/badge/Facebook-%231877F2.svg?&style=for-the-badge&logo=facebook&logoColor=white" />
-  </a>
-  <a href="https://www.instagram.com/frn_prime/profilecard/?igsh=MWltN3ozMmlyM3JhNg==" target="_blank">
-    <img src="https://img.shields.io/badge/Instagram-%23E4405F.svg?&style=for-the-badge&logo=instagram&logoColor=white" />
-  </a>
-  <a href="https://t.me/FARHAN_MUH_TASIM" target="_blank">
-    <img src="https://img.shields.io/badge/Telegram-%230088CC.svg?&style=for-the-badge&logo=telegram&logoColor=white" />
-  </a>
-  <a href="https://codepen.io/jisan-ff" target="_blank">
-    <img src="https://img.shields.io/badge/CodePen-%23131417.svg?&style=for-the-badge&logo=codepen&logoColor=white" />
-  </a>
-  <a href="https://github.com/Gtajisan" target="_blank">
-    <img src="https://img.shields.io/badge/GitHub-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white" />
-  </a>
-</p>
-
----
-
-## 📫 Contact Me
-
-- 💌 **Email:** *(You can add your email here if you want)*  
-- 💬 **Telegram:** [@FARHAN_MUH_TASIM](https://t.me/FARHAN_MUH_TASIM)  
-- 👔 **LinkedIn:** *jisan ff*  
-
----
-
-## ⚡ Fun Fact
-
-> I love creating things that make life easier — whether it’s automating a process, building a bot, or tweaking Android to perfection 
-
----
-
-### 🧠 “Code is like humor. When you have to explain it, it’s bad.”  
-— Cory House
 
 ### all developer contribute.
 
