@@ -64,8 +64,7 @@ echo -e "${GREEN}${BOLD}🎉 Installation Complete!${RESET}"
 echo -e "${CYAN}${BOLD}
 To run the FARHAN Shot tool, use:
 
-${YELLOW}sudo python FARHAN-Shot/
-File/FARHAN-Shot.py -i wlan0 -K${RESET}
+${YELLOW}sudo python FARHAN-Shot/main.py -i wlan0 -K${RESET}
 
 💡 Replace ${MAGENTA}wlan0${RESET} with your actual wireless interface (e.g. wlan1, eth0).
 
