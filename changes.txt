@@ -240,6 +240,89 @@ RESULT:
    [!] Integrity check failed: developer information has been
        tampered with.
 
+----------------------------------------------------------------
+COMMIT 7 — Integrate 3WiFi wpspin algorithms (22 new PIN algos)
+----------------------------------------------------------------
+MOTIVATION:
+   fr0stb1rd/3wifi-wpspin contains 40+ highly-accurate WPS PIN
+   algorithms not previously present in FARHAN-Shot or OneShot.
+   This commit ports all missing algorithms without touching any
+   existing FARHAN-Shot logic or branded elements.
+
+CHANGES IN main.py:
+
+1. New ALGO_MACSN = 4 mode
+   - A fourth PIN-generation mode for algorithms that require
+     both a MAC address AND a serial number (S/N) as input.
+   - When no S/N is available from a live WPS scan, the algos
+     use '' (empty string) or derive a fallback from the MAC.
+   - generate(), getAll(), getList() all handle mode 4 correctly.
+
+2. Universal Arcadyan/Vodafone DSL engine: _algo_dsl_mac_sn()
+   - Static method ported from the 3WiFi JS implementation.
+   - Derives a 7-digit intermediate PIN from two mixing keys
+     (k1, k2) built from the last four MAC nibbles plus SN
+     nibbles, driven by per-vendor bx control-word arrays.
+   - Supports sub=0/1/2 modes and sk/skv tuning parameters
+     (only sub=0 used by the three shipped vendors).
+
+3. New WPSpin methods and algos dict entries (22 total):
+
+   Bit-range variants (4 new):
+     pin36 — MAC integer mod 2^36
+     pin40 — MAC integer mod 2^40
+     pin44 — MAC integer mod 2^44
+     pin48 — Full 48-bit MAC integer
+
+   Byte-reversal variants (3 new):
+     pin24rh — reverse 3 bytes of NIC
+     pin32rh — reverse 4 bytes of lower MAC
+     pin48rh — reverse all 6 bytes of MAC
+
+   Nibble-reversal variants (3 new):
+     pin24rn — reverse 6 hex nibbles of NIC
+     pin32rn — reverse 8 hex nibbles of lower MAC
+     pin48rn — reverse all 12 hex nibbles of MAC
+
+   Bit-reversal variants (3 new):
+     pin24rb — mirror 24 bits of NIC
+     pin32rb — mirror 32 bits of lower MAC
+     pin48rb — mirror all 48 bits of MAC
+
+   NIC arithmetic (3 new):
+     pinInvNIC  — bitwise NOT of lower 24 bits
+     pinNIC2    — NIC * 2
+     pinNIC3    — NIC * 3
+
+   OUI ↔ NIC arithmetic (3 new):
+     pinOUIaddNIC — (OUI + NIC) mod 2^24
+     pinOUIsubNIC — |OUI - NIC| with wrap-around
+     pinOUIxorNIC — OUI XOR NIC
+
+   MAC+SN DSL engine algorithms (3 new, mode ALGO_MACSN):
+     pinBelkin     — bx=[66,129,209,10,24,3,39]
+       OUIs: 08863B, 94103E, B4750E, C05627, EC1A59
+     pinEasyBoxDSL — bx=[129,65,6,10,136,80,33]; SN fallback
+       = str(mac & 0xFFFF); OUIs: 00264D, 38229D, 7C4FB5
+     pinLivebox    — same engine as EasyBox on (MAC − 2)
+       OUIs: 1883BF, 488D36, 4C09D4, 507E5D, 5CDC96,
+             743170, 849CA6, 880355, 9C80DF, A8D3F7,
+             D0052A, D463FE
+
+4. _suggest() OUI table updated
+   - 3 new entries cover Belkin, EasyBoxDSL, and Livebox
+     so their MAC prefixes trigger targeted suggestion.
+
+5. Total algorithm count: 108 (from ~86 before this commit).
+   MAC-based: 29 | Static: 74 | MACSN: 3 | Empty: 1 | DB: 1
+
+COMPATIBILITY:
+   - All pre-existing algorithms untouched.
+   - Bit-range/reversal/NIC/OUI algos have no OUI restriction
+     (they run for all MACs via getAll(); not in smart suggest).
+   - Banner integrity hash unchanged — banner not modified.
+
+
 ================================================================
   Summary of all files changed across all commits
 ================================================================
