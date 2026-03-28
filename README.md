@@ -78,7 +78,7 @@ chmod +x FARHAN-Shot/main.py
 
 **Running fast command ?** If these not work then use FARHAN-Shotx.py
  ```console
-sudo python FARHAN-Shot/main.py -i wlan0 -K 
+sudo python3 FARHAN-Shot/main.py -i wlan0 --iface-down -K
  ```
 **if these not work then use**
 ```console
