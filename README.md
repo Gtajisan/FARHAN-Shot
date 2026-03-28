@@ -87,7 +87,7 @@ cd FARHAN-Shot && sudo python3 main.py -i wlan0 -K
 
 ### tool unstall cmd
 ```console
-rm -rf FARHAN-Shot
+sudo rm -rf FARHAN-Shot
 ```
 
 ## [Termux](https://termux.com/)
@@ -132,9 +132,9 @@ Please note that root access is required.
  Just run:
 ```sudo rfkill unblock wifi```
 #### "Device or resource busy (-16)"
- Try disabling Wi-Fi in the system settings and kill the Network manager. Alternatively, you can try running FARHAN-Shot2 with ```--iface-down``` argument.
+ Try disabling Wi-Fi in the system settings and kill the Network manager. Alternatively, you can try running FARHAN-Shot with ```--iface-down``` argument.
 #### The wlan0 interface disappears when Wi-Fi is disabled on Android devices with MediaTek SoC
- Try running FARHAN-Shot2 with the `--mtk-wifi` flag to initialize Wi-Fi device driver.
+ Try running FARHAN-Shot with the `--mtk-wifi` flag to initialize Wi-Fi device driver.
 
 
 # Acknowledgements
